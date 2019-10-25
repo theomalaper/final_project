@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import useApplicationData from './hooks/useApplicationData'
+import useApplicationData from '../hooks/useApplicationData'
 
 function App() {
   const { state, dispatch } = useApplicationData();
