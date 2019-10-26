@@ -13,7 +13,6 @@ export default function CityPage() {
       <h1>Trip</h1>
       <h2>ID: {id}</h2>
       <h1>Google Maps</h1>
-      hello
       <Map />
     </div>
   );
