@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.scss';
+import './Homepage.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   BrowserRouter as Router,
@@ -17,22 +19,23 @@ export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/cities/1">City</Link>
-            </li>
-            <li>
-              <Link to="/users/1">Users</Link>
-            </li>
-            <li>
-              <Link to="/trips/1">Trip</Link>
-            </li>
-          </ul>
-        </nav>
+        <header class="App-header">
+          <div class="header-title">
+            <div className="logo">
+              <img src="https://image.flaticon.com/icons/svg/2151/2151714.svg" alt="App Icon"/>
+              <h3>Travel IT</h3>
+            </div>
+            <Link class="react-links" to="/"><img src="https://i.imgur.com/DsFXPIu.png" alt="Home Page"/></Link>
+            <Link class="react-links" to="/cities/1"><img src="https://i.imgur.com/4aIHNB5.png" alt="City Page"/></Link>
+            <Link class="react-links" to="/users/1"><img src="https://i.imgur.com/qOq1S2B.png" alt="User Page"/></Link>
+            <Link class="react-links" to="/trips/1"><img src="https://i.imgur.com/pqlACvW.png" alt="Trip Page"/></Link>
+          </div>
+          <div class="header-links">
+            <img src="https://i.imgur.com/vaXmVM1.png" alt="Plus Icon"/>
+            <img src="https://i.imgur.com/Ib4nPvi.png" alt="Bottom Icon"/>
+            <img src="https://image.flaticon.com/icons/svg/273/273581.svg" class="profile-icon" alt="Profile icon"/>
+          </div>
+        </header>
 
         <Switch>
           <Route exact path="/users/:id">
