@@ -1,8 +1,7 @@
 import React from 'react';
-import './App.scss';
-import useApplicationData from './hooks/useApplicationData'
+import useApplicationData from '../hooks/useApplicationData'
 
-function App() {
+export default function Homepage() {
   const { state, dispatch } = useApplicationData();
 
   const userList = state.users.map(user => (
@@ -10,14 +9,12 @@ function App() {
       {user.first_name} {user.last_name} {user.email}
     </li>
   ));
-  
+
   return (
-    <div className="App">
-      <h1>Users</h1>
-
-      <ul>{userList}</ul>
-    </div>
+      <div className="App">
+        <h1>Users</h1>
+  
+        <ul>{userList}</ul>
+      </div>
   );
-}
-
-export default App;
+};
