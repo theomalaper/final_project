@@ -8,6 +8,9 @@ import {
   Link
 } from "react-router-dom";
 import Homepage from './Homepage';
+import CityPage from './CityPage';
+import TripPage from './TripPage';
+import UserPage from './UserPage';
 
 export default function App() {
 
@@ -32,6 +35,15 @@ export default function App() {
         </nav>
 
         <Switch>
+          <Route exact path="/users/:id">
+            <UserPage />
+          </Route>
+          <Route exact path="/cities/:id">
+            <CityPage />
+          </Route>
+          <Route exact path="/trips/:id">
+            <TripPage />
+          </Route>
           <Route exact path="/">
             <Homepage />
           </Route>
