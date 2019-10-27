@@ -884,7 +884,7 @@ exports.seed = function(knex) {
           city_id: 9,
         },
         {
-          name: "Hotel de Normandie,
+          name: "Hotel de Normandie",
           price: 116,
           image_url: "https://q-cf.bstatic.com/xdata/images/hotel/square200/96112509.jpg?k=acc1f50f07adf97bbdd33708d3423f7a09ff7c219718a84616feace1d60bf7a5&o=",
           accommodation_type_id: 3,
@@ -1603,13 +1603,6 @@ exports.seed = function(knex) {
           name: "The Ash",
           price: 26,
           image_url: "https://a.hwstatic.com/image/upload/f_auto,q_auto,w_188,h_272,c_fill,e_sharpen,e_improve,e_vibrance:60/v1/propertyimages/8/87064/koex1lvywyv0uplsxgvo",
-          accommodation_type_id: 1,
-          city_id: 17,
-        },
-        {
-          name: "",
-          price:,
-          image_url: "",
           accommodation_type_id: 1,
           city_id: 17,
         },
