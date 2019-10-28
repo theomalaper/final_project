@@ -1,11 +1,11 @@
 
 exports.up = function(knex) {
-  knex.schema.createTable('cities', t => {
+  return knex.schema.createTable('cities', t => {
     t.increments('id').primary().notNull().unsigned();
     t.string('name').notNull();
   });
 };
 
 exports.down = function(knex) {
-  knex.schema.dropTable('cities');
+  return knex.schema.dropTable('cities');
 };

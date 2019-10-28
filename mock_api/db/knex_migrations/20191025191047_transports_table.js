@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  knex.schema.createTable('transports', t => {
+  return knex.schema.createTable('transports', t => {
     t.increments('id').primary().notNull().unsigned();
     t.integer('company_id')
       .notNull()
@@ -10,7 +10,7 @@ exports.up = function(knex) {
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
     t.integer('price').notNull();
-    t.integer('duration').notNull();
+    t.integer('duration');
     t.integer('transport_type_id')
       .notNull()
       .unsigned()
@@ -36,5 +36,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  knex.schema.dropTable('transports')
+  return knex.schema.dropTable('transports')
 };
