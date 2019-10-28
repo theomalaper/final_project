@@ -7,7 +7,8 @@ exports.up = function(knex) {
     t.string('starting_city').notNull();
     t.date('start_date').notNull();
     t.bigInteger('budget');
-    t.string('type');
+    t.integere('traveller_nb');
+    t.string('travel_type');
     t.integer('user_id')
       .notNull()
       .unsigned()

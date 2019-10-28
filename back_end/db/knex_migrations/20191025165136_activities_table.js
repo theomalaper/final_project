@@ -5,6 +5,7 @@ exports.up = function(knex) {
     t.string('name').notNull();
     t.text('description').notNull();
     t.boolean('is_pinned').notNull();
+    t.string('activity_image').notNull();
     t.integer('city_id')
       .notNull()
       .unsigned()
