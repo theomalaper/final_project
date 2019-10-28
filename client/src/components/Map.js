@@ -19,8 +19,6 @@ export default function Map(props) {
         <Pin
           lat={48.8566}
           lng={2.3522}
-          title="Paris"
-          color="blue"
         />
       </GoogleMapReact>
     </div>
