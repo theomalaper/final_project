@@ -1,0 +1,39 @@
+.map {
+  margin-top: 55px;
+}
+
+.trip-title {
+  text-align: center;
+  padding: 5px 0;
+}
+.block {
+  background-color: rgb(240, 247, 255);
+  border: 1px solid rgb(211, 211, 211);
+  margin: 5px 10vh;
+  padding: 10px;
+  border-radius: 10px;
+
+  .city-title {
+  background-image: url('http://www.taxis-paris.fr/images/bandeau1.jpg');
+  background-size: 100% 100px;;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  }
+
+  .content {
+    background-color: transparent;
+  }
+
+  .buttons {
+    border: solid 1px lightgrey;
+    border-radius: 5px;
+    margin: 10px 0 0 20px;
+  }
+
+  .summary-title {
+    padding: 10px;
+    text-align: center;
+
+  }
+}
