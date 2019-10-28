@@ -61,15 +61,6 @@ exports.seed = function(knex) {
           name: "Amsterdam"
         },
         {
-          name: "Munich"
-        },
-        {
-          name: "Stuttgart"
-        },
-        {
-          name: "Nuremberg"
-        },
-        {
           name: "Frankfurt"
         },
         {
