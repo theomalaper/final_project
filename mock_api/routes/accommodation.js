@@ -9,7 +9,7 @@ module.exports = knex => {
       knex('accommodations').avg('price').where("accommodation_type_id", 3).andWhere('city_id', req.params.city_id)
     ])
       .then(result => {
-        res.json(result);
+        res.json(result[0]);
       })
       .catch(error => {
         console.log(error);
