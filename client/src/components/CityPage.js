@@ -11,7 +11,9 @@ export default function CityPage() {
     <div className="city-page">
       <header className="city-page-header">
         <div className="header-content">
+          <h4>Welcome to</h4>
           <h1>Madrid</h1>
+          <p>SPAIN</p>
           <div className="header-decision-icons">
             <div className="add-icon">
               <img className="hvr-grow" src="https://i.imgur.com/ZHqX3iY.png" alt="Add"/>
@@ -27,6 +29,13 @@ export default function CityPage() {
         <div className="background-overlay"></div>
         <img className="header-background" src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" alt="City Background"/>
       </header>
+      <section className="city-page-subnav">
+        <p className="hvr-grow">OVERVIEW</p>
+        <p className="hvr-grow">EXPERIENCES</p>
+        <p className="hvr-grow">GALLERY</p>
+        <p className="hvr-grow">ABOUT</p>
+        <p className="hvr-grow">MORE</p>
+      </section>
       <section className="city-page-container">
         <div className="left-side">
         <div className="city-description">
@@ -34,9 +43,9 @@ export default function CityPage() {
           <p>Madrid, Spain's central capital, is a city of elegant boulevards and expansive, manicured parks such as the Buen Retiro. It’s renowned for its rich repositories of European art, including the Prado Museum’s works by Goya, Velázquez and other Spanish masters. The heart of old Hapsburg Madrid is the portico-lined Plaza Mayor, and nearby is the baroque Royal Palace and Armory, displaying historic weaponry.</p>
         </div>
         <div className="city-activity-list">
-          <h3>Browse activities</h3>
+          <h3>Browse Experiences</h3>
           <div className="city-activity hvr-grow-list">
-            <div className="pin">
+            <div className="activity-pin">
               <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
             </div>
             <div className="city-activity-description">
@@ -45,7 +54,7 @@ export default function CityPage() {
             </div>
           </div>
           <div className="city-activity hvr-grow-list">
-            <div className="pin">
+            <div className="activity-pin">
               <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
             </div>
             <div className="city-activity-description">
@@ -54,7 +63,7 @@ export default function CityPage() {
             </div>
           </div>
           <div className="city-activity hvr-grow-list">
-            <div className="pin">
+            <div className="activity-pin">
               <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
             </div>
             <div className="city-activity-description">
@@ -63,7 +72,7 @@ export default function CityPage() {
             </div>
           </div>
           <div className="city-activity hvr-grow-list">
-            <div className="pin">
+            <div className="activity-pin">
               <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
             </div>
             <div className="city-activity-description">
@@ -168,27 +177,6 @@ export default function CityPage() {
               <div></div>
             </div>
             <img src="https://images.unsplash.com/photo-1559761598-6890ee30540b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1547636780-e41778614c28?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1651&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1564565988768-9259e4e68f2f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1509356428672-3589ea634248?ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80"/>
           </div>
         </div>
       </section>

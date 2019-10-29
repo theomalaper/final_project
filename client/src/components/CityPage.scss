@@ -1,18 +1,18 @@
 .city-page-header {
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   top: 0;
   .header-background {
     height: 100%;
     width: 100%;
   }
   .background-overlay {
-    height: 100%;
+    height: 80%;
     width: 100%;
     position: absolute;
     z-index: 100;
     background-color: black;
-    opacity: 0.4;
+    opacity: 0.23;
   }
   .header-content {
     position: absolute;
@@ -21,33 +21,42 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 80%;
     z-index: 1000;
     h1 {
       color: white;
-      font-size: 5em;
-      font-family: 'Noto Sans', sans-serif;
-      padding-bottom: 0.5em;
+      font-size: 5.5em;
+      font-family: 'Noto Sans SC', sans-serif;
       font-weight: bold;
+    }
+    h4 {
+      color: white;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 1.3em;
+    }
+    p {
+      color: white;
+      font-family: 'Noto Sans', sans-serif;
+      margin-bottom: 2em;
     }
     .header-decision-icons {
       width: 37vw;
       display: flex;
       justify-content: space-between;
-      border: 5px solid white;
-      border-radius: 75px;
+      border: 3.5px solid white;
+      border-radius: 15px;
       div {
         margin: 1em 2em;
-        height: 4.5em;
-        width: 4.5em; 
+        height: 4em;
+        width: 4em; 
         border-radius: 100px;
         -webkit-box-shadow: 0px 17px 39px 23px rgba(59,59,59,0.69);
         -moz-box-shadow: 0px 17px 39px 23px rgba(59,59,59,0.69);
         box-shadow: 0px 17px 39px 10px rgba(40, 40, 40, 0.69);
       }
       img {
-        height: 4.5em;
-        width: 4.5em;  
+        height: 4em;
+        width: 4em;  
       }
       .next-icon:hover img {
         content: url('https://i.imgur.com/I788obe.png');
@@ -56,9 +65,25 @@
         content: url('https://i.imgur.com/JZlydMI.png')
       }
       .add-icon:hover img{
-        content: url('https://i.imgur.com/dZybzKj.png');
+        content: url('https://i.imgur.com/Yj9n1SS.png');
       }
     }
+  }
+}
+
+.city-page-subnav {
+  display: flex;
+  height: 12vh;
+  width: 90vw;
+  justify-content: space-around;
+  margin: auto;
+  align-items: center;
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 8vh;
+  padding: 0 11em;
+  p {
+    font-size: 0.85em;
+    font-family: 'Noto Sans', sans-serif;
   }
 }
 
@@ -109,7 +134,7 @@
         display: flex;
         font-family: 'Noto Sans', sans-serif;
         margin-bottom: 1.2em;
-        .pin {
+        .activity-pin {
           padding: 0.5em 1.5em;
           width: 10%;
           border-right: 1px solid rgb(187, 187, 187);
@@ -125,6 +150,8 @@
         }
         .city-activity-description {
           padding: 1em 1.5em;
+          display: flex;
+          flex-direction: column;
           h4 {
             font-size: 1em;
             color: #0B3954;
@@ -210,7 +237,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    height: 100vh;
+    height: 75vh;
     width: 100vw;
     margin: auto;
     .gallery-image {
