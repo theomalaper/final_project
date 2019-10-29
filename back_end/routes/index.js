@@ -10,38 +10,38 @@ module.exports = knex => {
       .then((data) => res.json(data[0]))
       .catch(err => console.log(err));
   });
-};
-
-// GET Trip Page
-module.exports = knex => {
+  
+  // GET Trip Page
   router.get('/trips/:trip_id', (req, res, next) => {
     // Information about the trip and each city added to the trip
-    knex
-      .select('trips.name', 'trips.start_date', 'cities.name', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.daily_expense', 'cities.url', 'city_trips.duration', 'activities.name', 'accommodations.type', 'accommodations.avg_cost', 'transports.type', 'transports.avg_cost')
-      .from('trips')
-      .innerJoin('city_trips', 'trips.id', 'trip_id')
-      .innerJoin('cities', 'cities.id', 'city_id')
-      .innerJoin('activities', 'city_id', 'cities.id')
-      .innerJoin('transports', 'transports.id', 'transport_id')
-      .innerJoin('accommodations', 'accommodations.id', 'accommodation_id')
-      .where('trips.id', req.params.trip_id)
-      .then(data => res.json(data[0]))
-      .cath(err => console.log(err));
+    Promise.all([
+      knex
+        .select('name', 'isPlanning', 'starting_city', 'start_date', 'budget', 'traveller_nb', 'travel_type')
+        .from('trips')
+        .where('trips.id', req.params.trip_id),
+      knex
+        .select('cities.name', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation', 'accommodations.avg_cost AS accomodation_cost', 'transports.type AS transport', 'transports.avg_cost AS transport_cost')
+        .from('cities')
+        .innerJoin('city_trips', 'cities.id', 'city_trips.city_id')
+        .innerJoin('trips', 'trips.id', 'city_trips.trip_id')
+        .innerJoin('accommodations', 'accommodations.id', 'city_trips.accommodation_id')
+        .innerJoin('transports', 'transports.id', 'city_trips.transport_id')
+        .where('trips.id', req.params.trip_id)
+      ])
+    .then(data => res.json(data))
+    .catch(err => console.log(err));
   });
-};
 
-// POST Trip Page when submitting homepage's form
-module.exports = knex => {
+
+  // POST Trip Page when submitting homepage's form
   router.post('/trips', (req, res, next) => {
     knex('trips')
       .insert({is_planning: true}, {type: req.body.nb_people}, {type: req.body.type}, {budget: req.body.budget}, {starting_city: req.body.starting_city})
       .then(() => res.redirect('/cities/2'))
       .catch(err => console.log(err));
   });
-};
 
-// PUT Trip Page when saving the trip
-module.exports = knex => {
+  // PUT Trip Page when saving the trip
   router.put('/trips/:id', (req, res, next) => {
     knex('trips')
       .where('id', req.params.id)
@@ -49,10 +49,8 @@ module.exports = knex => {
       .then(() => res.redirect('/'))
       .catch(err => console.log(err))
   });
-};
 
-// DELETE Trip
-module.exports = knex => {
+  // DELETE Trip
   router.delete('/trips/:id', (req, res, next) => {
     knex('trips')
       .where({ id: req.params.id })
@@ -60,10 +58,8 @@ module.exports = knex => {
       .then(() => res.redirect('/'))
       .catch(err => console.log(err));
   });
-};
 
-// GET City Page
-module.exports = knex => {
+  // GET City Page
   router.get('trips/:trips_id/cities/:city_id', (req, res, next) => {
     Promise.all([
       // Information about the city and its activities
@@ -88,11 +84,8 @@ module.exports = knex => {
         console.log(error);
       });
   });
-  return router;
-};
 
-// POST New City when saving a city in the trip
-module.exports = knex => {
+  // POST New City when saving a city in the trip
   router.post('/trips/:trip_id/cities/:city_id', (req, res, next) => {
     Promise.all([
       // We insert in transports and accommodations first because we need their IDs to insert them in the city_trips
@@ -105,4 +98,5 @@ module.exports = knex => {
         .catch(err => console.log(err))
       });
   });
+  return router
 };
