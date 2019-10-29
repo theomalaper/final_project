@@ -19,21 +19,21 @@ export default function App() {
   return (
     <Router>
       <div>
-        <header class="App-header">
-          <div class="header-title">
+        <header className="App-header">
+          <div className="header-title">
             <div className="logo">
               <img src="https://image.flaticon.com/icons/svg/2151/2151714.svg" alt="App Icon"/>
               <h3>Travel IT</h3>
             </div>
-            <Link class="react-links" to="/"><img src="https://i.imgur.com/DsFXPIu.png" alt="Home Page"/></Link>
-            <Link class="react-links" to="/cities/1"><img src="https://i.imgur.com/4aIHNB5.png" alt="City Page"/></Link>
-            <Link class="react-links" to="/users/1"><img src="https://i.imgur.com/qOq1S2B.png" alt="User Page"/></Link>
-            <Link class="react-links" to="/trips/1"><img src="https://i.imgur.com/pqlACvW.png" alt="Trip Page"/></Link>
+            <Link className="react-links" to="/"><img src="https://i.imgur.com/DsFXPIu.png" alt="Home Page"/></Link>
+            <Link className="react-links" to="/cities/1"><img src="https://i.imgur.com/4aIHNB5.png" alt="City Page"/></Link>
+            <Link className="react-links" to="/users/1"><img src="https://i.imgur.com/qOq1S2B.png" alt="User Page"/></Link>
+            <Link className="react-links" to="/trips/1"><img src="https://i.imgur.com/pqlACvW.png" alt="Trip Page"/></Link>
           </div>
-          <div class="header-links">
+          <div className="header-links">
             <img src="https://i.imgur.com/vaXmVM1.png" alt="Plus Icon"/>
             <img src="https://i.imgur.com/Ib4nPvi.png" alt="Bottom Icon"/>
-            <img src="https://image.flaticon.com/icons/svg/273/273581.svg" class="profile-icon" alt="Profile icon"/>
+            <img src="https://image.flaticon.com/icons/svg/273/273581.svg" className="profile-icon" alt="Profile icon"/>
           </div>
         </header>
 
