@@ -2,11 +2,11 @@
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return Promise.all([
-    knex('zones').del(),
-    knex.raw('ALTER SEQUENCE zones_id_seq RESTART WITH 1'),
-    knex('zones').then(function() {
+    knex('cities').del(),
+    knex.raw('ALTER SEQUENCE cities_id_seq RESTART WITH 1'),
+    knex('cities').then(function() {
       // Inserts seed entries
-      return knex('zones').insert([
+      return knex('cities').insert([
         {
           name: "Madrid",
           description: "Madrid, the capital of Spain, is a cosmopolitan city with a large cultural and artistic heritage. Besides being a cultural destination, Madrid is also a lively city with many pubs, cafes, and nightclubs. In Madrid, there are many museums such as the Nacional Del Prado, Museum of Americas and the Railway Museum that are definitely worth visiting. Madrid also has several quite unique and interesting tourist spots that you could explore. For example, the open-air pool with several giant slides that the kids just love. There is also El Rastro, an authentic Spanish flea market where you can find absolutely everything.",

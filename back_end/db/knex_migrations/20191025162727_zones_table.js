@@ -3,9 +3,9 @@ exports.up = function(knex) {
   return knex.schema.createTable('zones', t => {
     t.increments('id').primary().notNull().unsigned();
     t.string('name').notNull();
-    t.float('coordinate_longitude');
-    t.float('coordinate_latitute');
-    t.float('zoom')
+    t.float('coordinate_longitude').notNull();
+    t.float('coordinate_latitude').notNull();
+    t.float('zoom').notNull()
   })
 };
 
