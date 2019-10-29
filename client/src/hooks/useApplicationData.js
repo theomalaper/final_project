@@ -2,13 +2,18 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 const SET_USERS = 'SET_USERS';
+const SET_TRIP = 'SET_TRIP'
 
-const dataReducer = (state, action) => {
+const reducer = (state, action) => {
   const actions = {
     SET_USERS: {
       ...state,
       users: action.users,
     },
+    SET_TRIP: {
+      ...state,
+      trip: action.trip,
+    }
   };
 
   if (!actions[action.type]) {
@@ -18,22 +23,35 @@ const dataReducer = (state, action) => {
 };
 
 const useApplicationData = () => {
-  const [state, dispatch] = useReducer(dataReducer, { users: [] })
+  const [state, dispatch] = useReducer(reducer, {
+    trip: {},
+  })
 
-  useEffect(() => {
-    axios
-      .get('/api/users')
+  const submitTrip = (travellerNb, type, budget, startingCity, startDate, zone) => {
+
+    const trip = {
+      ...state.trip,
+      travellerNb,
+      type,
+      budget,
+      startingCity,
+      startDate,
+      zone
+    }
+
+    return axios.put(`/trips`, { trip })
       .then(result => {
-        dispatch({ type: SET_USERS, users: result.data });
+        dispatch({ type: SET_TRIP, trip: result.data})
       })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   return {
     state,
     dispatch,
+    submitTrip
   };
 }
 

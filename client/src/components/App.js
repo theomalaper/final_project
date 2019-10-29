@@ -13,8 +13,10 @@ import Homepage from './Homepage';
 import CityPage from './CityPage';
 import TripPage from './TripPage';
 import UserPage from './UserPage';
+import useApplicationData from '../hooks/useApplicationData';
 
 export default function App() {
+  const { state, submitTrip } = useApplicationData()
 
   return (
     <Router>
@@ -48,9 +50,23 @@ export default function App() {
             <TripPage />
           </Route>
           <Route exact path="/">
-            <Homepage />
+            <Homepage submitTrip={submitTrip}/>
           </Route>
         </Switch>
+
+        <footer className="App-footer">
+          <section className="left-side">
+           <p className="hvr-grow">OVERVIEW</p>
+           <p className="hvr-grow">CONTACT US</p>
+           <p className="hvr-grow">ABOUT</p>
+           <p className="hvr-grow">MORE</p>
+          </section>
+          <section className="right-side">
+            <img src="https://image.flaticon.com/icons/svg/145/145812.svg"/>
+            <img src="https://image.flaticon.com/icons/svg/179/179319.svg"/>
+            <img src="https://image.flaticon.com/icons/svg/179/179328.svg"/>
+          </section>
+        </footer>
       </div>
     </Router>
   );
