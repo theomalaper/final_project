@@ -53,8 +53,9 @@ module.exports = knex => {
   // POST Trip Page when submitting homepage's form
   router.post('/trips', (req, res, next) => {
     knex('trips')
-      .insert({is_planning: true}, {type: req.body.nb_people}, {type: req.body.type}, {budget: req.body.budget}, {starting_city: req.body.starting_city})
-      .then(() => res.redirect('/cities/2'))
+      .insert({is_planning: true}, {traveller_nb: req.body.trip.travellerNb}, {travel_type: req.body.trip.type}, {budget: req.body.trip.budget}, {starting_city: req.body.trip.startingCity}, {start_date: req.body.trip.startDate}, {zone: req.body.trip.zone}, {user_id: 1})
+      .returning("*")
+      .then((result) => res.json(result.rows[0]))
       .catch(err => console.log(err));
   });
 
