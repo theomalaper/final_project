@@ -108,6 +108,6 @@ export default function TripForm(props) {
          </div>
        </div>
        <p className="trip-form-error-message">{"" || error}</p>
-    </form>
+    </form> 
   )
 }

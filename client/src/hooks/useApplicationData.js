@@ -39,7 +39,7 @@ const useApplicationData = () => {
       zone
     }
 
-    return axios.put(`/trips`, { trip })
+    return axios.post(`/trips`, { trip })
       .then(result => {
         dispatch({ type: SET_TRIP, trip: result.data})
       })
