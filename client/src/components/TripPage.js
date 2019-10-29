@@ -1,15 +1,54 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   useParams
 } from "react-router-dom";
+import { Button, ButtonGroup, ButtonToolbar, ListGroup } from 'react-bootstrap';
+import Map from './Map';
+import './TripPage.scss';
 
-export default function CityPage() {
+
+export default function TripPage() {
   const { id } = useParams();
 
   return (
-    <div>
-      <h1>Trip</h1>
-      <h2>ID: {id}</h2>
-    </div>
+    <Fragment>
+      <header className="map">
+        <Map />
+      </header>
+      <h1 className="trip-title">CHRISTMAS 2019</h1>
+      <section className="block">
+        <h3 className="city-title">Paris</h3>
+        <ListGroup variant="flush">
+          <ListGroup.Item className="content">20/12/2019 - 27/12/2019 (7 days)</ListGroup.Item>
+          <ListGroup.Item className="content">Activities
+            <ul>
+              <li>Activity 1</li>
+              <li>Activity 2</li>
+            </ul>
+          </ListGroup.Item>
+          <ListGroup.Item className="content">Cost: 1000$</ListGroup.Item>
+        </ListGroup>
+        <ButtonToolbar aria-label="Toolbar with button groups">
+          <ButtonGroup className="mr-2 buttons" aria-label="First group">
+            <Button disabled variant="secondary">A</Button>
+            <Button disabled variant="light">H</Button>
+            <Button disabled variant="light">Hs</Button>
+          </ButtonGroup>
+          <ButtonGroup className="mr-2 buttons" aria-label="Second group">
+            <Button disabled variant="light">B</Button>
+            <Button disabled variant="secondary">T</Button>
+            <Button disabled variant="light">P</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
+      </section>
+      <section className="block">
+        <h3 className="summary-title">Summary</h3>
+        <ListGroup variant="flush">
+          <ListGroup.Item className="content">Cities explored: 1</ListGroup.Item>
+          <ListGroup.Item className="content">Duration: 7 days</ListGroup.Item>
+          <ListGroup.Item className="content">Cost: 1000$</ListGroup.Item>
+        </ListGroup>
+      </section>
+    </Fragment>
   );
 };

@@ -6,7 +6,9 @@ exports.up = function(knex) {
     t.text('description').notNull();
     t.float('coordinate_latitude').notNull();
     t.float('coordinate_longitude').notNull();
+    t.float('zoom').notNull();
     t.integer('avg_daily_expense').notNull();
+    t.string('city_image').notNull();
     t.integer('zone_id')
       .notNull()
       .unsigned()
