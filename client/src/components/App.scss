@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #51514F;
+  background-color: #0B3954;
   position: fixed;
   top: 0;
   width : 100%;
@@ -21,11 +21,14 @@
     .logo {
       display: flex;
       justify-content: space-around;
-      align-items: center;
+      align-items: flex-end;
       width: 30%;
       img {
         height: 2.4em;
         width: 2.4em;
+      }
+      h3 {
+        font-size: 1.3em;
       }
     }
     img {
