@@ -1,8 +1,26 @@
 const express = require('express');
 const router = express.Router();
 
-// GET Homepage
+// Helper function that loops over each activity and adds its activity_links to it
+const reformatActivities = activities => {
+  const output = {};
+  for(let activity of activities) {
+    if (!output[activity.id]){
+      output[activity.id] = activity;
+      output[activity.id].link_types = [activity.link_type]
+      output[activity.id].link_names = [activity.link_name]
+      output[activity.id].link_urls = [activity.link_url]
+    } else {
+      output[activity.id].link_types.push(activity.link_type)
+      output[activity.id].link_names.push(activity.link_name)
+      output[activity.id].link_urls.push(activity.link_url)
+    }
+  }
+  return Object.values(output);
+};
+
 module.exports = knex => {
+  // GET Homepage
   router.get('/', (req, res, next) => {
     knex
       .select('id', 'name', 'url')
@@ -14,19 +32,23 @@ module.exports = knex => {
   // GET Trip Page
   router.get('/trips/:trip_id', (req, res, next) => {
     // Information about the trip and each city added to the trip
-    knex
-      .select('trips.name', 'trips.start_date', 'cities.name', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'city_image', 'city_trips.days', 'activities.name', 'accommodations.type', 'accommodations.avg_cost', 'transports.type', 'transports.avg_cost')
-      .from('trips')
-      .innerJoin('city_trips', 'trips.id', 'trip_id')
-      .innerJoin('cities', 'cities.id', 'city_trips.city_id')
-      .innerJoin('activities', 'activities.city_id', 'cities.id')
-      .innerJoin('transports', 'transports.id', 'transport_id')
-      .innerJoin('accommodations', 'accommodations.id', 'accommodation_id')
-      .where('trips.id', req.params.trip_id)
-      .then(data => res.json(data[0]))
-      .catch(err => console.log(err));
+    Promise.all([
+      knex
+        .select('name', 'isPlanning', 'starting_city', 'start_date', 'budget', 'traveller_nb', 'travel_type')
+        .from('trips')
+        .where('trips.id', req.params.trip_id),
+      knex
+        .select('cities.name', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation', 'accommodations.avg_cost AS accomodation_cost', 'transports.type AS transport', 'transports.avg_cost AS transport_cost')
+        .from('cities')
+        .innerJoin('city_trips', 'cities.id', 'city_trips.city_id')
+        .innerJoin('trips', 'trips.id', 'city_trips.trip_id')
+        .innerJoin('accommodations', 'accommodations.id', 'city_trips.accommodation_id')
+        .innerJoin('transports', 'transports.id', 'city_trips.transport_id')
+        .where('trips.id', req.params.trip_id)
+      ])
+    .then(data => res.json(data))
+    .catch(err => console.log(err));
   });
-
 
   // POST Trip Page when submitting homepage's form
   router.post('/trips', (req, res, next) => {
@@ -55,25 +77,31 @@ module.exports = knex => {
   });
 
   // GET City Page
-  router.get('trips/:trips_id/cities/:city_id', (req, res, next) => {
+  router.get('/trips/:trips_id/cities/:city_id', (req, res, next) => {
     Promise.all([
-      // Information about the city and its activities
+      // Information about the city
       knex
-        .select('cities.name', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom', 'activities.id', 'activieis.name', 'activities.description', 'activities.is_pinned', 'activities.url', 'activity_links.name', 'activity_links.type', 'activity_links.url')
+        .select('cities.name', 'cities.description', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
         .from('cities')
-        .innerJoin('activities', 'cities.id', 'city_id')
-        .innerJoin('activity_links', 'activities.id', 'activity_id')
         .where("cities.id", req.params.city_id),
       
+      // Information about the activities in that city
+      knex
+        .select('activities.id', 'activities.name', 'activities.description', 'activities.activity_image', 'activity_links.name AS link_name', 'activity_links.type AS link_type', 'activity_links.url AS link_url')
+        .from('activities')
+        .innerJoin('activity_links', 'activities.id', 'activity_id')
+        .where('activities.city_id', req.params.city_id),
+
       // Information about cities already added in the trip to add them on the map
       knex
-        .select('coordinate_latitude', 'coordinate_longitude').from('cities')
+        .select('coordinate_latitude', 'coordinate_longitude')
+        .from('cities')
         .innerJoin('city_trips', 'city_id', 'cities.id')
         .innerJoin('trips', 'trips.id', 'trip_id')
-        .where('trip_id', 'trips.id')
+        .where('trips.id', req.params.trips_id)
     ])
       .then(data => {
-        res.json(data[0]);
+        res.json([data[0], reformatActivities(data[1]), data[2]]);
       })
       .catch(error => {
         console.log(error);
