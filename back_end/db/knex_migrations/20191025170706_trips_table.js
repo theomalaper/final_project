@@ -16,6 +16,13 @@ exports.up = function(knex) {
       .inTable('users')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
+    t.integer('zone_id')
+      .notNull()
+      .unsigned()
+      .references('id')
+      .inTable('zones')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
     t.timestamps(true, true);
   })
 };
