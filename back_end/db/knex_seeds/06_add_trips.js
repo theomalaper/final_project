@@ -16,6 +16,7 @@ exports.seed = function(knex) {
           traveller_nb: 1,
           travel_type: "casual",
           user_id: 1,
+          zone_id: 1,
         },
       ]);
     }),
