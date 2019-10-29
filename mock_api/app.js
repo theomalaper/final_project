@@ -8,7 +8,8 @@ const knex = require('knex')(knexConfig['development']);
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
-const citiesRouter = require('./routes/cities');
+const accommodationRouter = require('./routes/accommodation');
+const transportRouter = require('./routes/transport');
 
 const app = express();
 
@@ -23,7 +24,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/cities', citiesRouter);
+app.use('/api/accommodation', accommodationRouter(knex));
+app.use('/api/transport', transportRouter(knex));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

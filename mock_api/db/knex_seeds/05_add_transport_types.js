@@ -16,7 +16,7 @@ exports.seed = function(knex) {
         {
           name: 'plane'
         },
-      ]);
+      ]); 
     }),
   ]);
 };

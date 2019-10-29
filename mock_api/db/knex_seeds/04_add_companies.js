@@ -8,14 +8,95 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('companies').insert([
         {
-          name: 'rowValue1'
+          name: 'AirEuropa'
         },
         {
-          name: 'rowValue2'
+          name: 'Iberia'
         },
         {
-          name: 'rowValue3'
-        }
+          name: 'Avanza'
+        },
+        {
+          name: 'Renfe'
+        },
+        {
+          name: 'Alsa'
+        },
+        {
+          name: 'Vueling'
+        },
+        {
+          name: 'BlaBlaBus'
+        },
+        {
+          name: 'Eurolines'
+        },
+        {
+          name: 'Easyjets'
+        },
+        {
+          name: 'Eurowings'
+        },
+        {
+          name: 'SNCF'
+        },
+        {
+          name: 'Ryanair'
+        },
+        {
+          name: 'Airfrance'
+        },
+        {
+          name: 'Flixbus'
+        },
+        {
+          name: 'Trenitalia'
+        },
+        {
+          name: 'Infobus'
+        },
+        {
+          name: 'Marinobus'
+        },
+        {
+          name: 'Italo'
+        },
+        {
+          name: 'SBB'
+        },
+        {
+          name: 'Swiss'
+        },
+        {
+          name: 'DB'
+        },
+        {
+          name: 'TGV lyria'
+        },
+        {
+          name: 'KLM'
+        },
+        {
+          name: 'SAS'
+        },
+        {
+          name: 'SWEG'
+        },
+        {
+          name: 'inOui'
+        },
+        {
+          name: 'Thalys'
+        },
+        {
+          name: 'Transavia'
+        },
+        {
+          name: 'Lufthansa'
+        },
+        {
+          name: 'IC'
+        },
       ]);
     }),
   ]);

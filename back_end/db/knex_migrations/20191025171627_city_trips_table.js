@@ -2,8 +2,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('city_trips', t => {
     t.increments('id').primary().notNull().unsigned();
-    t.date('start_date').notNull();
-    t.date('end_date').notNull();
+    t.integer('days').notNull();
     t.integer('city_id')
       .notNull()
       .unsigned()
