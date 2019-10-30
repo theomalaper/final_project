@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   useParams
 } from "react-router-dom";
-import useApplicationData from '../hooks/useApplicationData';
 import './CityPage.scss';
 import Map from './Map';
 import ActivityList from './ActivityList';
@@ -10,7 +10,16 @@ import ActivityGallery from './ActivityGallery';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, cities } = props;
+  const { city, activities, cities, dispatch, SET_CITY_DATA } = props;
+
+  useEffect(() => {
+    axios.get("/trips/1/cities/2")
+      .then(all => {
+        console.log("citypage")
+        dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
+      })
+      .catch(err => console.log(err))
+  }, []);
   
   return (
     <div className="city-page">
