@@ -13,7 +13,7 @@ export default function CityPage(props) {
   const { city, activities, cities, dispatch, SET_CITY_DATA } = props;
 
   useEffect(() => {
-    axios.get("/trips/1/cities/2")
+    axios.get(`/trips/1/cities/${id}`)
       .then(all => {
         console.log("citypage")
         dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
