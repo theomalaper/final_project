@@ -25,7 +25,7 @@ export default function App() {
           <div className="header-title">
             <div className="logo">
               <img src="https://image.flaticon.com/icons/svg/2151/2151714.svg" alt="App Icon"/>
-              <h3>Travel IT</h3>
+              <h3>NEXT</h3>
             </div>
             <Link className="react-links" to="/"><img src="https://i.imgur.com/DsFXPIu.png" alt="Home Page"/></Link>
             <Link className="react-links" to="/cities/1"><img src="https://i.imgur.com/4aIHNB5.png" alt="City Page"/></Link>
@@ -50,7 +50,10 @@ export default function App() {
             <TripPage />
           </Route>
           <Route exact path="/">
-            <Homepage submitTrip={submitTrip}/>
+            <Homepage 
+              submitTrip={submitTrip}
+              cities={state.cities}
+            />
           </Route>
         </Switch>
 
