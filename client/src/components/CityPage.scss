@@ -39,7 +39,7 @@
       font-family: 'Noto Sans', sans-serif;
       margin-bottom: 2em;
     }
-    .header-decision-icons {
+    .header-decision-form {
       width: 37vw;
       display: flex;
       justify-content: space-between;
@@ -67,6 +67,33 @@
       .add-icon:hover img{
         content: url('https://i.imgur.com/Yj9n1SS.png');
       }
+    }  
+  }
+}
+
+.city-trip-form {
+  position: absolute;
+  z-index: 9999;
+  width: 37vw;
+  display: flex;
+  border: 3.5px solid white;
+  border-radius: 15px;
+  .show-card {
+    width: 37vw;
+    display:flex;
+    justify-content: space-between;
+    div {
+      margin: 1em 2em;
+      height: 4em;
+      width: 4em; 
+      border-radius: 100px;
+      -webkit-box-shadow: 0px 17px 39px 23px rgba(59,59,59,0.69);
+      -moz-box-shadow: 0px 17px 39px 23px rgba(59,59,59,0.69);
+      box-shadow: 0px 17px 39px 10px rgba(40, 40, 40, 0.69);
+    }
+    img {
+      height: 4em;
+      width: 4em;  
     }
   }
 }
