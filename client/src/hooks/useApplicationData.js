@@ -4,6 +4,7 @@ import axios from 'axios';
 const SET_USERS = 'SET_USERS';
 const SET_TRIP = 'SET_TRIP';
 const SET_CITY_DATA = 'SET_CITY_DATA';
+const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA'
 
 const reducer = (state, action) => {
   const actions = {
@@ -20,6 +21,10 @@ const reducer = (state, action) => {
       city: action.city,
       activities: action.activities,
       cities: action.citiesInTrip
+    },
+    SET_HOMEPAGE_DATA: {
+      ...state,
+      cities: action.cities,
     }
   };
 
@@ -33,6 +38,13 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     trip: {},
   })
+
+  useEffect(() => {
+    axios.get('/homepage')
+      .then(result => {
+        dispatch({ type: SET_HOMEPAGE_DATA, cities: result.data })
+      })
+  }, [])
 
   const submitTrip = (travellerNb, type, budget, startingCity, startDate, zone) => {
 

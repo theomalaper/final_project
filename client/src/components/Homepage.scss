@@ -176,6 +176,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    display: inline-block;
+    overflow: hidden;
     .overlay {
       display: flex;
       justify-content: center;
@@ -229,5 +231,5 @@ input[type=date]::-webkit-outer-spin-button {
 .hvr-grow:hover,
 .hvr-grow:focus,
 .hvr-grow:active {
-  transform: scale(1.3);
+  transform: scale(1.1);
 }
