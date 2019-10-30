@@ -19,18 +19,6 @@ export default function CityPage(props) {
       })
       .catch(err => console.log(err))
   }, []);
-
-  // useEffect(() => {
-  //   const cityData = axios.get(`/trips/1/cities/${id}`);
-  //   const accForCityData = axio.get(`/api/accommodation/${id}`)
-
-  //   Promise.all([ cityData, accForCityData ])
-  //     .then(all => {
-  //       dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
-  //     })
-  //     .catch(err => console.log(err))
-    
-  // }, []);
   
   return (
     <div className="city-page">
