@@ -115,11 +115,9 @@ module.exports = knex => {
         .innerJoin('trips', 'trips.id', 'trip_id')
         .where('trips.id', req.params.trips_id),
       
-      // Avg price of hostels in that city
+      // Avg prices of accommodations in that city
       request({uri:'http://localhost:3003/api/accommodation/hostel/' + req.params.city_id, json:true}),
-
       request({uri:'http://localhost:3003/api/accommodation/airbnb/' + req.params.city_id, json:true}),
-
       request({uri:'http://localhost:3003/api/accommodation/hotel/' + req.params.city_id, json:true}),
 
     ])
