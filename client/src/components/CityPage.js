@@ -54,7 +54,7 @@ export default function CityPage(props) {
         </div>
         <div className="right-side">
           <div className="city-map">
-            <Map />
+            <Map cities={cities} city={city}/>
           </div>
           <h3>Expenses</h3>
           <div className="city-avg-expenses">

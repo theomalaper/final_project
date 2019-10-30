@@ -46,6 +46,15 @@ const useApplicationData = () => {
       })
   }, [])
 
+  // useEffect(() => {
+  //   axios.get("/trips/1/cities/2")
+  //     .then(all => {
+  //       dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
+  //     })
+  //     .catch(err => console.log(err))
+  // }, []);
+
+
   const submitTrip = (travellerNb, type, budget, startingCity, startDate, zone) => {
 
     const trip = {
@@ -66,14 +75,6 @@ const useApplicationData = () => {
         console.log(err)
       })
   }
-
-  useEffect(() => {
-    axios.get("/trips/1/cities/2")
-      .then(all => {
-        dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
-      })
-      .catch(err => console.log(err))
-  }, []);
 
   return {
     state,
