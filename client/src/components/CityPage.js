@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useParams
 } from "react-router-dom";
+import useApplicationData from '../hooks/useApplicationData';
 import './CityPage.scss';
+import Map from './Map';
+import ActivityList from './ActivityList';
+import ActivityGallery from './ActivityGallery';
 
-export default function CityPage() {
+export default function CityPage(props) {
   const { id } = useParams();
-
+  const { city, activities, cities } = props;
+  
   return (
     <div className="city-page">
       <header className="city-page-header">
         <div className="header-content">
           <h4>Welcome to</h4>
-          <h1>Madrid</h1>
+          <h1>{city ? city[0].name : null}</h1>
           <p>SPAIN</p>
           <div className="header-decision-icons">
             <div className="add-icon">
@@ -27,7 +32,7 @@ export default function CityPage() {
           </div>
         </div>
         <div className="background-overlay"></div>
-        <img className="header-background" src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" alt="City Background"/>
+        <img className="header-background" src={city ? city[0].image : null} alt="City Background"/>
       </header>
       <section className="city-page-subnav">
         <p className="hvr-grow">OVERVIEW</p>
@@ -38,53 +43,18 @@ export default function CityPage() {
       </section>
       <section className="city-page-container">
         <div className="left-side">
-        <div className="city-description">
-          <h2><img src="https://image.flaticon.com/icons/svg/2150/2150088.svg"/>City Description</h2>
-          <p>Madrid, Spain's central capital, is a city of elegant boulevards and expansive, manicured parks such as the Buen Retiro. It’s renowned for its rich repositories of European art, including the Prado Museum’s works by Goya, Velázquez and other Spanish masters. The heart of old Hapsburg Madrid is the portico-lined Plaza Mayor, and nearby is the baroque Royal Palace and Armory, displaying historic weaponry.</p>
-        </div>
-        <div className="city-activity-list">
-          <h3>Browse Experiences</h3>
-          <div className="city-activity hvr-grow-list">
-            <div className="activity-pin">
-              <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
-            </div>
-            <div className="city-activity-description">
-              <h4>Name of Activity</h4>
-              <p>The Prado Museum, officially known as Museo Nacional del Prado, is the main Spanish national art museum, located in central Madrid.</p>
-            </div>
+          <div className="city-description">
+            <h2><img src="https://image.flaticon.com/icons/svg/2150/2150088.svg"/>Description</h2>
+            <p>{city ? city[0].description : null}</p>
           </div>
-          <div className="city-activity hvr-grow-list">
-            <div className="activity-pin">
-              <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
-            </div>
-            <div className="city-activity-description">
-              <h4>Name of Activity</h4>
-              <p>The Prado Museum, officially known as Museo Nacional del Prado, is the main Spanish national art museum, located in central Madrid.</p>
-            </div>
+          <div className="city-activity-list">
+            <h3>Browse Experiences</h3>
+            <ActivityList activities={activities}/>
           </div>
-          <div className="city-activity hvr-grow-list">
-            <div className="activity-pin">
-              <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
-            </div>
-            <div className="city-activity-description">
-              <h4>Name of Activity</h4>
-              <p>The Prado Museum, officially known as Museo Nacional del Prado, is the main Spanish national art museum, located in central Madrid.</p>
-            </div>
-          </div>
-          <div className="city-activity hvr-grow-list">
-            <div className="activity-pin">
-              <img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/>
-            </div>
-            <div className="city-activity-description">
-              <h4>Name of Activity</h4>
-              <p>The Prado Museum, officially known as Museo Nacional del Prado, is the main Spanish national art museum, located in central Madrid.</p>
-            </div>
-          </div>
-        </div>
         </div>
         <div className="right-side">
           <div className="city-map">
-            <img src="https://image.flaticon.com/icons/svg/814/814513.svg"/>
+            <Map />
           </div>
           <h3>Expenses</h3>
           <div className="city-avg-expenses">
@@ -136,48 +106,7 @@ export default function CityPage() {
       <section className="gallery">
         <h3>Browse Gallery</h3>
         <div className="photo-gallery-images">
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1509845350455-fb0c36048db1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1562580821-10d51c62dde2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1571316090783-bf029ad15bc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1640&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1571317672045-77fcc0e02cdd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"/>
-          </div>
-          <div className="gallery-image">
-            <div className="gallery-image-overlay">
-              <h3>Activity Name</h3>
-              <div></div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1559761598-6890ee30540b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"/>
-          </div>
+          <ActivityGallery activities={activities} />
         </div>
       </section>
     </div>

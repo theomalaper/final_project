@@ -44,7 +44,11 @@ export default function App() {
             <UserPage />
           </Route>
           <Route exact path="/cities/:id">
-            <CityPage />
+            <CityPage 
+              city={state.city}
+              activities={state.activities}
+              cities={state.cities}
+            />
           </Route>
           <Route exact path="/trips/:id">
             <TripPage />

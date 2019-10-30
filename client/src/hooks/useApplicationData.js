@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const SET_USERS = 'SET_USERS';
 const SET_TRIP = 'SET_TRIP';
+const SET_CITY_DATA = 'SET_CITY_DATA';
 const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA'
 
 const reducer = (state, action) => {
@@ -14,6 +15,12 @@ const reducer = (state, action) => {
     SET_TRIP: {
       ...state,
       trip: action.trip,
+    },
+    SET_CITY_DATA: {
+      ...state,
+      city: action.city,
+      activities: action.activities,
+      cities: action.citiesInTrip
     },
     SET_HOMEPAGE_DATA: {
       ...state,
@@ -60,11 +67,20 @@ const useApplicationData = () => {
       })
   }
 
+  useEffect(() => {
+    axios.get("/trips/1/cities/2")
+      .then(all => {
+        dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
+      })
+      .catch(err => console.log(err))
+  }, []);
+
   return {
     state,
     dispatch,
-    submitTrip
+    submitTrip,
   };
+  
 }
 
 export default useApplicationData;

@@ -93,7 +93,7 @@ module.exports = knex => {
     Promise.all([
       // Information about the city
       knex
-        .select('cities.name', 'cities.description', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
+        .select('cities.name', 'cities.description', 'cities.city_image as image', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
         .from('cities')
         .where("cities.id", req.params.city_id),
       
