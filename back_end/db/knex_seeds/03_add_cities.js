@@ -15,6 +15,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 60,
           city_image: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+          country: "SPAIN",
           zone_id: 1,
         },
         {
@@ -25,6 +26,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 53,
           city_image: "https://blog.eurail.com/wp-content/uploads/2016/07/View-on-Peniscola-from-the-top-of-Pope-Lunas-Castle-Valencia-Spain.jpg",
+          country: "SPAIN",
           zone_id: 1,
         },
         {
@@ -35,6 +37,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 48,
           city_image: "https://images.unsplash.com/photo-1566993850427-6324a91bbd32?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1967&q=80",
+          country: "SPAIN",
           zone_id: 1,
         },
         {
@@ -45,6 +48,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 49,
           city_image: "https://img.theculturetrip.com/1440x807/smart/wp-content/uploads/2018/03/zaragoza-spain-.jpg",
+          country: "SPAIN",
           zone_id: 1,
         },
         {
@@ -55,6 +59,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 67,
           city_image: "https://images.unsplash.com/photo-1562191184-704e6744136d?ixlib=rb-1.2.1&auto=format&fit=crop&w=2089&q=80",
+          country: "SPAIN",
           zone_id: 1,
         },
         {
@@ -65,6 +70,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 56,
           city_image: "https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/04/26/09/toulouse-shutterstock.jpg?width=1000&height=614&fit=bounds&format=pjpg&auto=webp&quality=70&crop=16:9,offset-y0.5",
+          country: "FRANCE",
           zone_id: 1,
         },
         {
@@ -75,6 +81,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 53,
           city_image: "https://i.imgur.com/llMlpnZ.jpg",
+          country: "FRANCE",
           zone_id: 1,
         },
         {
@@ -85,6 +92,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 52,
           city_image: "https://www.thetrainline.com/cmsmedia/cms/8266/nice_x2.jpg",
+          country: "FRANCE",
           zone_id: 1,
         },
         {
@@ -95,6 +103,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 55,
           city_image: "https://images.unsplash.com/photo-1537015125382-74e1f1c99ac4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+          country: "FRANCE",
           zone_id: 1,
         },
         {
@@ -105,6 +114,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 66,
           city_image: "https://dpv87w1mllzh1.cloudfront.net/alitalia_discover/attachments/data/000/000/476/original/torino-royal-torino-1920x1080.jpg?1519196650",
+          country: "ITALY",
           zone_id: 1,
         },
         {
@@ -115,6 +125,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 62,
           city_image: "https://images.unsplash.com/photo-1512397739299-fe5a4327d192?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+          country: "ITALY",
           zone_id: 1,
         },
         {
@@ -125,6 +136,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 74,
           city_image: "http://www.swissgearlife.com/wp-content/uploads/2019/06/welcome-to-geneva-switzerland.jpg",
+          country: "SWITZERLAND",
           zone_id: 1,
         },
         {
@@ -135,6 +147,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 72,
           city_image: "https://images.unsplash.com/photo-1554229296-ad6d6ddc2db7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+          country: "SWITZERLAND",
           zone_id: 1,
         },
         {
@@ -145,6 +158,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 55,
           city_image: "https://images.unsplash.com/photo-1552326859-b25d03868ead?ixlib=rb-1.2.1&auto=format&fit=crop&w=2032&q=80",
+          country: "FRANCE",
           zone_id: 1,
         },
         {
@@ -155,6 +169,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 79,
           city_image: "https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg",
+          country: "FRANCE",
           zone_id: 1,
         },
         {
@@ -165,6 +180,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 61,
           city_image: "https://images.unsplash.com/photo-1526164756841-ec188df0730e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2978&q=80",
+          country: "BELGIUM",
           zone_id: 1,
         },
         {
@@ -175,6 +191,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 62,
           city_image: "https://images.unsplash.com/photo-1551522812-b9a174a623c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1652&q=80",
+          country: "BELGIUM",
           zone_id: 1,
         },
         {
@@ -185,6 +202,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 74,
           city_image: "https://images.unsplash.com/photo-1468436385273-8abca6dfd8d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1594&q=80",
+          country: "NETHERLANDS",
           zone_id: 1,
         },
         {
@@ -195,6 +213,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 58,
           city_image: "https://images.unsplash.com/photo-1540646794357-6cbbd6f3501e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1568&q=80",
+          country: "GERMANY",
           zone_id: 1,
         },
         {
@@ -205,6 +224,7 @@ exports.seed = function(knex) {
           zoom: 5.8,
           avg_daily_expense: 62,
           city_image: "https://images.unsplash.com/photo-1561624485-0e43bcc1836d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+          country: "GERMANY",
           zone_id: 1,
         },
       ]);

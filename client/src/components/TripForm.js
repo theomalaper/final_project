@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import classNames from 'classnames'
 
 export default function TripForm(props) {
   const [travellerNb, setTravellerNb] = useState(1)
@@ -8,6 +9,7 @@ export default function TripForm(props) {
   const [startDate, setStartDate] = useState("")
   const [zone, setZone] = useState("")
   const [error,setError] = useState("")
+
 
   const chooseZone = (event, id) => {
     event.preventDefault()
@@ -86,25 +88,25 @@ export default function TripForm(props) {
       <div className="form-region">
         <p>What are you looking for?</p>
         <div className="region-images">
-          <button className="region-box hvr-grow europe" value="1" onClick={event => chooseZone(event, 1)}>
+          <button className="region-box hvr-grow" value="1" onClick={event => chooseZone(event, 1)}>
              <img src ="https://i.imgur.com/PJjiOfa.png" alt="Europe"/>
            </button>
-           <button className="region-box hvr-grow north-america" value="2" onClick={event => chooseZone(event, 2)}>
+           <button className="region-box hvr-grow" value="2" onClick={event => chooseZone(event, 2)}>
              <img src ="https://i.imgur.com/WGKXE0I.png" alt="North America"/>
            </button>
-           <button className="region-box hvr-grow south-america" id="3" onClick={event => chooseZone(event, 3)}>
+           <button className="region-box hvr-grow" id="3" onClick={event => chooseZone(event, 3)}>
              <img src ="https://i.imgur.com/unn35BP.png" alt="South America"/>
            </button>
            <button className="region-box hvr-grow" id="4" onClick={event => chooseZone(event, 4)}>
              <img src ="https://i.imgur.com/iTn7rYB.png" alt="Africa" className="africa"/>
            </button>
-           <button className="region-box hvr-grow australia" id="5" onClick={event => chooseZone(event, 5)}>
+           <button className="region-box hvr-grow" id="5" onClick={event => chooseZone(event, 5)}>
              <img src ="https://i.imgur.com/y881gTI.png" alt="Australia"/>
            </button>
-           <button className="region-box hvr-grow asia" id="6" onClick={event => chooseZone(event, 6)}>
+           <button className="region-box hvr-grow" id="6" onClick={event => chooseZone(event, 6)}>
              <img src ="https://i.imgur.com/OzIOrqJ.png" alt="Asia"/>
            </button>
-           <button className="submit-button" value="GO" onClick={event => validate(event, travellerNb, type, budget, startingCity, startDate, zone)}>GO</button>
+           <button className="submit-button hvr-float" value="GO" onClick={event => validate(event, travellerNb, type, budget, startingCity, startDate, zone)}>GO</button>
          </div>
        </div>
        <p className="trip-form-error-message">{"" || error}</p>

@@ -21,11 +21,13 @@ const reformatActivities = activities => {
 
 module.exports = knex => {
   // GET Homepage
-  router.get('/', (req, res, next) => {
+  router.get('/homepage', (req, res, next) => {
     knex
-      .select('id', 'name', 'url')
+      .select('id', 'name', 'city_image', 'country')
       .from('cities')
-      .then((data) => res.json(data[0]))
+      .then(result => {
+        res.json(result)
+      })
       .catch(err => console.log(err));
   });
   
