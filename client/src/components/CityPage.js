@@ -10,7 +10,7 @@ import ActivityGallery from './ActivityGallery';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, citiesInTrip, dispatch, SET_CITY_DATA } = props;
+  const { city, activities, cities, dispatch, SET_CITY_DATA } = props;
 
   useEffect(() => {
     axios.get(`/trips/1/cities/${id}`)
@@ -19,6 +19,18 @@ export default function CityPage(props) {
       })
       .catch(err => console.log(err))
   }, []);
+
+  // useEffect(() => {
+  //   const cityData = axios.get(`/trips/1/cities/${id}`);
+  //   const accForCityData = axio.get(`/api/accommodation/${id}`)
+
+  //   Promise.all([ cityData, accForCityData ])
+  //     .then(all => {
+  //       dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
+  //     })
+  //     .catch(err => console.log(err))
+    
+  // }, []);
   
   return (
     <div className="city-page">
@@ -62,7 +74,7 @@ export default function CityPage(props) {
         </div>
         <div className="right-side">
           <div className="city-map">
-            <Map citiesInTrip={citiesInTrip} city={city}/>
+            <Map cities={cities} city={city}/>
           </div>
           <h3>Expenses</h3>
           <div className="city-avg-expenses">
