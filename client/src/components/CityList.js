@@ -15,5 +15,5 @@ export default function CityList(props) {
     <div className="city-selection">
       {cities}
     </div>
-  )
+  ) 
 }
