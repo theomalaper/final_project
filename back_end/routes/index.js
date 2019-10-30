@@ -1,3 +1,4 @@
+const request = require('request-promise-native');
 const express = require('express');
 const router = express.Router();
 
@@ -112,10 +113,18 @@ module.exports = knex => {
         .from('cities')
         .innerJoin('city_trips', 'city_id', 'cities.id')
         .innerJoin('trips', 'trips.id', 'trip_id')
-        .where('trips.id', req.params.trips_id)
+        .where('trips.id', req.params.trips_id),
+      
+      // Avg price of hostels in that city
+      request({uri:'http://localhost:3003/api/accommodation/hostel/' + req.params.city_id, json:true}),
+
+      request({uri:'http://localhost:3003/api/accommodation/airbnb/' + req.params.city_id, json:true}),
+
+      request({uri:'http://localhost:3003/api/accommodation/hotel/' + req.params.city_id, json:true}),
+
     ])
       .then(data => {
-        res.json([data[0], reformatActivities(data[1]), data[2]]);
+        res.json([data[0], reformatActivities(data[1]), data[2], data[3], data[4], data[5]]);
       })
       .catch(error => {
         console.log(error);
