@@ -31,7 +31,7 @@ export default function Map(props) {
     )
     } else {
     return (
-      <img src="https://image.flaticon.com/icons/svg/814/814513.svg"/>
+      <img src="https://image.flaticon.com/icons/svg/814/814513.svg" alt="Picture of Earth"/>
     )
   }
 }
