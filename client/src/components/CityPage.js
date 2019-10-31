@@ -11,15 +11,16 @@ import CityTripForm from './cityTripForm';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, dispatch, SET_CITY_DATA } = props;
-
+  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, dispatch, trip, SET_CITY_DATA } = props;
+  
   useEffect(() => {
-    axios.get(`/trips/1/cities/${id}`)
+    if (trip.id) {
+    axios.get(`/trips/${trip.id}/cities/${id}`)
       .then(all => {
         dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2], hostel_price: all.data[3], airbnb_price: all.data[4], hotel_price: all.data[5] })
       })
-      .catch(err => console.log(err))
-  }, []);
+      .catch(err => console.log(err))}
+  }, [trip]);
   
   return (
     <div className="city-page">
