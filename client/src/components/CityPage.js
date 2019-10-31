@@ -29,21 +29,8 @@ export default function CityPage(props) {
           <h4>Welcome to</h4>
           <h1>{city ? city[0].name : null}</h1>
           <p>SPAIN</p>
-          <div className="header-decision-form">
-            <div className="add-icon">
-              <img className="hvr-grow" src="https://i.imgur.com/ZHqX3iY.png" alt="Add"/>
-            </div>
-            <div className="finish-icon">
-              <img className="hvr-grow" src="https://i.imgur.com/Ph5gTKO.png" alt="Finish"/>
-            </div>
-            <div className="next-icon">
-              <img className="hvr-grow" src="https://i.imgur.com/KWN3vlN.png" alt="Next"/>
-            </div>
-          </div>
-        </div>
-        <section className="city-trip-form">
           {<CityTripForm />}
-        </section>
+        </div>
         <div className="background-overlay"></div>
         <img className="header-background" src={city ? city[0].image : null} alt="City Background"/>
       </header>

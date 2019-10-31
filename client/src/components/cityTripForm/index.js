@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Show from './Show'
 import Form from './Form'
 import Confirm from './Confirm'
@@ -10,9 +10,12 @@ const CONFIRM = 'CONFIRM'
 
 export default function CityTripForm() {
   const { mode, transition, back } = useVisualMode(SHOW)
+  const [days, setDays] = useState(1)
+  const [accommodation, setAccommodation] = useState(0)
+  const [transport, setTransport] = useState(0)
 
   return (
-    <div>
+    <div className="city-trip-form">
       {mode === SHOW && (
         <Show 
           onAdd={() => transition(FORM)} 
@@ -21,12 +24,18 @@ export default function CityTripForm() {
       )}
       {mode === FORM &&  (
         <Form 
-          onCancel={() => back()} 
+          cancel={() => back()} 
+          setDays={setDays}
+          days={days}
+          transport={transport}
+          setTransport={setTransport}
+          accommodation={accommodation}
+          setAccommodation={setAccommodation}
         />
       )}
       {mode === CONFIRM && (
         <Confirm 
-          onCancel={() => back()} 
+          cancel={() => back()}
         />
       )}
     </div>
