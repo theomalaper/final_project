@@ -35,7 +35,7 @@ export default function TripForm(props) {
     setIsPlanning(true);
   }
 
-  if (isPlanning === true) {
+  if (isPlanning === false) {
     return (
       <form className="travel-form">
         <div className="form-info">
