@@ -25,7 +25,10 @@ const reducer = (state, action) => {
       citiesInTrip: action.citiesInTrip,
       hostel_price: action.hostel_price,
       airbnb_price: action.airbnb_price,
-      hotel_price: action.hotel_price
+      hotel_price: action.hotel_price,
+      bus_price: action.bus_price,
+      train_price: action.train_price,
+      plane_price: action.plane_price
     },
     SET_HOMEPAGE_DATA: {
       ...state,
