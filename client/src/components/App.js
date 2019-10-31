@@ -51,6 +51,9 @@ export default function App() {
               hotel_price={state.hotel_price}
               airbnb_price={state.airbnb_price}
               hostel_price={state.hostel_price}
+              bus_price={state.bus_price}
+              train_price={state.train_price}
+              plane_price={state.plane_price}
               dispatch={dispatch}
               trip={state.trip}
               SET_CITY_DATA={SET_CITY_DATA}
