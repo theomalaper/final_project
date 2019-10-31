@@ -193,8 +193,8 @@ exports.seed = function(knex) {
         },
         {
           starting_city: 2,
-          ending_city: 1397.02,
-          distance: 20,
+          ending_city: 20,
+          distance: 1397.02,
         },
         {
           starting_city: 3,
