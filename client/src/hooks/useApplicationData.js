@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
+import { sample } from 'lodash'
 
 const SET_USERS = 'SET_USERS';
 const SET_TRIP = 'SET_TRIP';
@@ -61,10 +62,17 @@ const useApplicationData = () => {
       zone
     }
 
-    return axios.post(`/trips`, { trip })
+    axios.post(`/trips`, { trip })
       .then(result => {
         dispatch({ type: SET_TRIP, trip: result.data})
+        return result.data
       })
+      .then(trip => {
+        return axios.get(`/homepage-redirection/${trip.starting_city}`)
+      }) 
+      .then(result => {
+        console.log(sample(result.data).ending_city)
+      }) 
       .catch(err => {
         console.log(err)
       })
