@@ -8,14 +8,13 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('transports').insert([
         {
-          type: "train",
-          avg_cost: 44,
-          avg_duration: 180,
+          type: "Bus",
         },
         {
-          type: "train",
-          avg_cost: 46,
-          avg_duration: 215,
+          type: "Train",
+        },
+        {
+          type: "Plane",
         },
       ]);
     }),

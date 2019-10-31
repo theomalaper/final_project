@@ -24,6 +24,7 @@ exports.up = function(knex) {
       .inTable('accommodations')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
+    t.integer('avg_accommodation_cost').notNull();
     t.integer('transport_id')
       .notNull()
       .unsigned()
@@ -31,6 +32,7 @@ exports.up = function(knex) {
       .inTable('transports')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
+    t.integer('avg_transport_cost').notNull();
     t.timestamps(true, true);
   })
 };
