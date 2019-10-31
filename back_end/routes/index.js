@@ -73,6 +73,17 @@ module.exports = knex => {
       .catch(err => console.log(err));
   });
 
+  router.get('/homepage-redirection/:starting_city', (req, res, next) => {
+    knex.select('ending_city')
+      .from('city_distances')
+      .where('starting_city', parseInt(req.params.starting_city))
+      .andWhere('distance', '<=', 506.0)
+      .then((result) => {
+        res.json(result)
+      })
+      .catch(err => console.log(err));
+  })
+
   // PUT Trip Page when saving the trip
   router.put('/trips/:id', (req, res, next) => {
     knex('trips')

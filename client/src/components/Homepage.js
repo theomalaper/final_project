@@ -3,6 +3,7 @@ import useApplicationData from '../hooks/useApplicationData'
 import './Homepage.scss';
 import TripForm from "./TripForm"
 import CityList from "./CityList"
+import { Redirect } from 'react-router-dom';
 
 export default function Homepage(props) {
   
@@ -19,7 +20,10 @@ export default function Homepage(props) {
     }
     return <CityList cities={cityArr}/>
   }
-
+  
+  if (props.redirect_id) {
+    return <Redirect to= {{ pathname: `/cities/${props.redirect_id}` }} />
+  }
   return (
       <div className="Homepage">
         <header className="Homepage-header">
