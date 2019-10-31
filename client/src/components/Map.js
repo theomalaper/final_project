@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import Pin from './Pin';
- 
-// const Pin = ({ text }) => <div>{text}</div>;
  
 export default function Map(props) {
   const { citiesInTrip, city } = props;
@@ -22,6 +20,7 @@ export default function Map(props) {
           />
           {citiesInTrip.map(city =>
           <Pin
+            key={city.id}
             lat={city.coordinate_latitude}
             lng={city.coordinate_longitude}
           />
@@ -31,7 +30,7 @@ export default function Map(props) {
     )
     } else {
     return (
-      <img src="https://image.flaticon.com/icons/svg/814/814513.svg" alt="Picture of Earth"/>
+      null
     )
   }
 }
