@@ -63,6 +63,7 @@ export default function App() {
             <Homepage 
               submitTrip={submitTrip}
               cities={state.cities}
+              redirect_id={state.redirect_id}
             />
           </Route>
         </Switch>

@@ -1,10 +1,12 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
+import { sample } from 'lodash'
 
 const SET_USERS = 'SET_USERS';
 const SET_TRIP = 'SET_TRIP';
 const SET_CITY_DATA = 'SET_CITY_DATA';
 const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA'
+const SET_REDIRECT_ID = 'SET_REDIRECT_ID'
 
 const reducer = (state, action) => {
   const actions = {
@@ -28,6 +30,10 @@ const reducer = (state, action) => {
     SET_HOMEPAGE_DATA: {
       ...state,
       cities: action.cities,
+    },
+    SET_REDIRECT_ID: {
+      ...state,
+      redirect_id: action.redirect_id
     }
   };
 
@@ -61,10 +67,17 @@ const useApplicationData = () => {
       zone
     }
 
-    return axios.post(`/trips`, { trip })
+    axios.post(`/trips`, { trip })
       .then(result => {
         dispatch({ type: SET_TRIP, trip: result.data})
+        return result.data
       })
+      .then(trip => {
+        return axios.get(`/homepage-redirection/${trip.starting_city}`)
+      }) 
+      .then(result => {
+        dispatch({ type: SET_REDIRECT_ID, redirect_id: sample(result.data).ending_city })
+      }) 
       .catch(err => {
         console.log(err)
       })
