@@ -4,7 +4,7 @@ exports.up = function(knex) {
     t.increments('id').primary().notNull().unsigned();
     t.string('name')
     t.boolean('isPlanning').notNull();
-    t.string('starting_city').notNull();
+    t.integer('starting_city').notNull();
     t.date('start_date').notNull();
     t.bigInteger('budget');
     t.integer('traveller_nb');

@@ -10,7 +10,7 @@ exports.seed = function(knex) {
         {
           name: "Europe 2019",
           isPlanning: false,
-          starting_city: "Madrid",
+          starting_city: 1,
           start_date: "2019-10-20",
           budget: 4000,
           traveller_nb: 1,

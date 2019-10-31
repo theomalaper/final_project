@@ -1,3 +1,4 @@
+const request = require('request-promise-native');
 const express = require('express');
 const router = express.Router();
 
@@ -60,7 +61,7 @@ module.exports = knex => {
         traveller_nb: req.body.trip.travellerNb,
         travel_type: req.body.trip.type,
         budget: req.body.trip.budget,
-        starting_city: req.body.trip.startingCity, 
+        starting_city: knex.select('id').from('cities').where('name', req.body.trip.startingCity),
         start_date: req.body.trip.startDate,
         zone_id: req.body.trip.zone,
         user_id: 1
@@ -92,34 +93,51 @@ module.exports = knex => {
 
   // GET City Page
   router.get('/trips/:trips_id/cities/:city_id', (req, res, next) => {
-    Promise.all([
-      // Information about the city
-      knex
-        .select('cities.name', 'cities.description', 'cities.city_image as image', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
-        .from('cities')
-        .where("cities.id", req.params.city_id),
-      
-      // Information about the activities in that city
-      knex
-        .select('activities.id', 'activities.name', 'activities.description', 'activities.activity_image', 'activity_links.name AS link_name', 'activity_links.type AS link_type', 'activity_links.url AS link_url')
-        .from('activities')
-        .innerJoin('activity_links', 'activities.id', 'activity_id')
-        .where('activities.city_id', req.params.city_id),
 
-      // Information about cities already added in the trip to add them on the map
-      knex
-        .select('coordinate_latitude', 'coordinate_longitude')
-        .from('cities')
-        .innerJoin('city_trips', 'city_id', 'cities.id')
-        .innerJoin('trips', 'trips.id', 'trip_id')
-        .where('trips.id', req.params.trips_id)
-    ])
-      .then(data => {
-        res.json([data[0], reformatActivities(data[1]), data[2]]);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // Making a first promise to fetch the IDs needed for the request to the transport api, then we do all the other requests with the
+    knex.select('starting_city').from('trips').where('trips.id', req.params.trips_id).then(trip_id => {
+    
+      Promise.all([
+        // Information about the city
+        knex
+          .select('cities.name', 'cities.description', 'cities.city_image as image', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
+          .from('cities')
+          .where("cities.id", req.params.city_id),
+        
+        // Information about the activities in that city
+        knex
+          .select('activities.id', 'activities.name', 'activities.description', 'activities.activity_image', 'activity_links.name AS link_name', 'activity_links.type AS link_type', 'activity_links.url AS link_url')
+          .from('activities')
+          .innerJoin('activity_links', 'activities.id', 'activity_id')
+          .where('activities.city_id', req.params.city_id),
+
+        // Information about cities already added in the trip to add them on the map
+        knex
+          .select('cities.id', 'coordinate_latitude', 'coordinate_longitude')
+          .from('cities')
+          .innerJoin('city_trips', 'city_id', 'cities.id')
+          .innerJoin('trips', 'trips.id', 'trip_id')
+          .where('trips.id', req.params.trips_id),
+        
+        // Avg prices of accommodations in that city
+        request({uri:`http://localhost:3003/api/accommodation/hostel/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/accommodation/airbnb/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/accommodation/hotel/${req.params.city_id}`, json:true}),
+
+        // Avg prices of transports to that city
+        request({uri:`http://localhost:3003/api/transport/bus/${trip_id[0].starting_city}/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/transport/train/${trip_id[0].starting_city}/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/transport/plane/${trip_id[0].starting_city}/${req.params.city_id}`, json:true})
+
+      ])
+        .then(data => {
+          res.json([data[0], reformatActivities(data[1]), data[2], data[3], data[4], data[5], data[6], data[7], data[8]]);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    })
+    .catch(err => console.log(err));
   });
 
   // POST New City when saving a city in the trip

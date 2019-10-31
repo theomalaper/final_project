@@ -48,6 +48,9 @@ export default function App() {
               city={state.city}
               activities={state.activities}
               citiesInTrip={state.citiesInTrip}
+              hotel_price={state.hotel_price}
+              airbnb_price={state.airbnb_price}
+              hostel_price={state.hostel_price}
               dispatch={dispatch}
               SET_CITY_DATA={SET_CITY_DATA}
             />

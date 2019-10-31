@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import {
   useParams
@@ -11,13 +11,12 @@ import CityTripForm from './cityTripForm';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, cities, dispatch, SET_CITY_DATA } = props;
+  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, dispatch, SET_CITY_DATA } = props;
 
   useEffect(() => {
     axios.get(`/trips/1/cities/${id}`)
       .then(all => {
-        console.log("citypage")
-        dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2] })
+        dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2], hostel_price: all.data[3], airbnb_price: all.data[4], hotel_price: all.data[5] })
       })
       .catch(err => console.log(err))
   }, []);
@@ -54,7 +53,7 @@ export default function CityPage(props) {
         </div>
         <div className="right-side">
           <div className="city-map">
-            <Map cities={cities} city={city}/>
+            <Map citiesInTrip={citiesInTrip} city={city}/>
           </div>
           <h3>Expenses</h3>
           <div className="city-avg-expenses">
@@ -62,21 +61,21 @@ export default function CityPage(props) {
               <h5>Hostel</h5>
               <div className="expense-content">
                 <img className="hvr-float" src="https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/76/e9/01/76e901cc-cf66-3d97-d5c2-f318455d992c/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-7.png/246x0w.jpg"></img>
-                <p>$22</p>
+                <p>${hostel_price ? Math.round(hostel_price.avg) : null}</p>
               </div>
             </div>
             <div className="expense">
               <h5>AirBnB</h5>
               <div className="expense-content">
                 <img className="hvr-float" src="https://image.flaticon.com/icons/svg/2111/2111320.svg"></img>
-                <p>$49</p>
+                <p>${airbnb_price ? Math.round(airbnb_price.avg) : null}</p>
               </div>
             </div>
             <div className="expense">
               <h5>Hotel</h5>
               <div className="expense-content">
                 <img className="hvr-float" src="https://image.flaticon.com/icons/svg/2149/2149307.svg"></img>
-                <p>$94</p>
+                <p>${hotel_price ? Math.round(hotel_price.avg) : null}</p>
               </div>
             </div>
             <div className="expense">
