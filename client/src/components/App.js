@@ -52,6 +52,7 @@ export default function App() {
               airbnb_price={state.airbnb_price}
               hostel_price={state.hostel_price}
               dispatch={dispatch}
+              trip={state.trip}
               SET_CITY_DATA={SET_CITY_DATA}
             />
           </Route>
