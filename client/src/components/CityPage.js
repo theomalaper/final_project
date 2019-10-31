@@ -10,7 +10,7 @@ import ActivityGallery from './ActivityGallery';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, cities, hostel_price, airbnb_price, hotel_price, dispatch, SET_CITY_DATA } = props;
+  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, dispatch, SET_CITY_DATA } = props;
 
   useEffect(() => {
     axios.get(`/trips/1/cities/${id}`)
@@ -62,7 +62,7 @@ export default function CityPage(props) {
         </div>
         <div className="right-side">
           <div className="city-map">
-            <Map cities={cities} city={city}/>
+            <Map citiesInTrip={citiesInTrip} city={city}/>
           </div>
           <h3>Expenses</h3>
           <div className="city-avg-expenses">
