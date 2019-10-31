@@ -6,6 +6,7 @@ const SET_USERS = 'SET_USERS';
 const SET_TRIP = 'SET_TRIP';
 const SET_CITY_DATA = 'SET_CITY_DATA';
 const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA'
+const SET_REDIRECT_ID = 'SET_REDIRECT_ID'
 
 const reducer = (state, action) => {
   const actions = {
@@ -29,6 +30,10 @@ const reducer = (state, action) => {
     SET_HOMEPAGE_DATA: {
       ...state,
       cities: action.cities,
+    },
+    SET_REDIRECT_ID: {
+      ...state,
+      redirect_id: action.redirect_id
     }
   };
 
@@ -71,7 +76,7 @@ const useApplicationData = () => {
         return axios.get(`/homepage-redirection/${trip.starting_city}`)
       }) 
       .then(result => {
-        console.log(sample(result.data).ending_city)
+        dispatch({ type: SET_REDIRECT_ID, redirect_id: sample(result.data).ending_city })
       }) 
       .catch(err => {
         console.log(err)
