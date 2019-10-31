@@ -8,12 +8,13 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('accommodations').insert([
         {
-          type: "AirBnB",
-          avg_cost: 38,
+          type: "Hostel",
         },
         {
-          type: "Hostel",
-          avg_cost: 25,
+          type: "AirBnB",
+        },
+        {
+          type: "Plane",
         },
       ]);
     }),
