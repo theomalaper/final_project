@@ -11,15 +11,16 @@ import CityTripForm from './cityTripForm';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, dispatch, SET_CITY_DATA } = props;
-
+  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, bus_price, train_price, plane_price, dispatch, trip, SET_CITY_DATA } = props;
+  
   useEffect(() => {
-    axios.get(`/trips/1/cities/${id}`)
+    if (trip.id) {
+    axios.get(`/trips/${trip.id}/cities/${id}`)
       .then(all => {
-        dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2], hostel_price: all.data[3], airbnb_price: all.data[4], hotel_price: all.data[5] })
+        dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2], hostel_price: all.data[3], airbnb_price: all.data[4], hotel_price: all.data[5], bus_price: all.data[6], train_price: all.data[7], plane_price: all.data[8] })
       })
-      .catch(err => console.log(err))
-  }, []);
+      .catch(err => console.log(err))}
+  }, [trip]);
   
   return (
     <div className="city-page">
@@ -82,21 +83,21 @@ export default function CityPage(props) {
               <h5>Bus</h5>
               <div className="expense-content">
                 <img className="hvr-float" src="https://image.flaticon.com/icons/svg/2149/2149123.svg"></img>
-                <p>$23</p>
+                <p>${bus_price ? Math.round(bus_price.avg) : null}</p>
               </div>
             </div>
             <div className="expense">
               <h5>Train</h5>
               <div className="expense-content">
                 <img className="hvr-float" src="https://image.flaticon.com/icons/svg/2149/2149329.svg"></img>
-                <p>$50</p>
+                <p>${train_price ? Math.round(train_price.avg) : null}</p>
               </div>
             </div>
             <div className="expense">
               <h5>Plane</h5>
               <div className="expense-content">
                 <img  className="hvr-float" src="https://image.flaticon.com/icons/svg/2149/2149092.svg"></img>
-                <p>$100</p>
+                <p>${plane_price ? Math.round(plane_price.avg) : null}</p>
               </div>
             </div>
           </div>
