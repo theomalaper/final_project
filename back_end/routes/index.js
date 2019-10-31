@@ -61,7 +61,7 @@ module.exports = knex => {
         traveller_nb: req.body.trip.travellerNb,
         travel_type: req.body.trip.type,
         budget: req.body.trip.budget,
-        starting_city: req.body.trip.startingCity, 
+        starting_city: knex.select('id').from('cities').where('name', req.body.trip.startingCity),
         start_date: req.body.trip.startDate,
         zone_id: req.body.trip.zone,
         user_id: 1
