@@ -7,6 +7,7 @@ import './CityPage.scss';
 import Map from './Map';
 import ActivityList from './ActivityList';
 import ActivityGallery from './ActivityGallery';
+import CityTripForm from './cityTripForm';
 
 export default function CityPage(props) {
   const { id } = useParams();
@@ -27,17 +28,7 @@ export default function CityPage(props) {
           <h4>Welcome to</h4>
           <h1>{city ? city[0].name : null}</h1>
           <p>SPAIN</p>
-          <div className="header-decision-icons">
-            <div className="add-icon">
-              <img className="hvr-grow" src="https://i.imgur.com/ZHqX3iY.png" alt="Add"/>
-            </div>
-            <div className="finish-icon">
-              <img className="hvr-grow" src="https://i.imgur.com/Ph5gTKO.png" alt="Finish"/>
-            </div>
-            <div className="next-icon">
-              <img className="hvr-grow" src="https://i.imgur.com/KWN3vlN.png" alt="Next"/>
-            </div>
-          </div>
+          {<CityTripForm />}
         </div>
         <div className="background-overlay"></div>
         <img className="header-background" src={city ? city[0].image : null} alt="City Background"/>
