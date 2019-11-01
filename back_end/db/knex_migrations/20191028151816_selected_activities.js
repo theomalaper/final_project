@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  return knex.schema.createTable('city_trip_activities', t => {
+  return knex.schema.createTable('selected_activities', t => {
     t.increments('id').primary().notNull().unsigned();
     t.integer('activity_id')
       .notNull()
@@ -20,5 +20,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('city_trip_activities')
+  return knex.schema.dropTable('selected_activities')
 };

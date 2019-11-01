@@ -37,16 +37,19 @@ module.exports = knex => {
     // Information about the trip and each city added to the trip
     Promise.all([
       knex
-        .select('name', 'isPlanning', 'starting_city', 'start_date', 'budget', 'traveller_nb', 'travel_type')
+        .select('trips.name', 'isPlanning', 'starting_city', 'start_date', 'budget', 'traveller_nb', 'travel_type', 'zones.name AS zone', 'zones.coordinate_longitude', 'zones.coordinate_latitude', 'zones.zoom')
         .from('trips')
+        .innerJoin('zones', 'trips.zone_id', 'zones.id')
         .where('trips.id', req.params.trip_id),
       knex
-        .select('cities.name', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation', 'accommodations.avg_cost AS accomodation_cost', 'transports.type AS transport', 'transports.avg_cost AS transport_cost')
+        .select('cities.id', 'cities.name', 'cities.country', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation_type', 'city_trips.avg_accommodation_cost AS accomodation_cost', 'transports.type AS transport_type', 'city_trips.avg_transport_cost AS transport_cost', 'activities.id AS activity_id')
         .from('cities')
         .innerJoin('city_trips', 'cities.id', 'city_trips.city_id')
         .innerJoin('trips', 'trips.id', 'city_trips.trip_id')
         .innerJoin('accommodations', 'accommodations.id', 'city_trips.accommodation_id')
         .innerJoin('transports', 'transports.id', 'city_trips.transport_id')
+        .leftJoin('selected_activities', 'selected_activities.city_trip_id', 'city_trips.id')
+        .leftJoin('activities', 'selected_activities.activity_id', 'activities.id')
         .where('trips.id', req.params.trip_id)
       ])
     .then(data => res.json(data))
