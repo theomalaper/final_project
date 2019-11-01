@@ -91,9 +91,18 @@ module.exports = knex => {
         .leftJoin('selected_activities', 'selected_activities.city_trip_id', 'city_trips.id')
         .leftJoin('activities', 'selected_activities.activity_id', 'activities.id')
         .leftJoin('activity_links', 'activity_links.activity_id', 'activities.id')
-        .where('trips.id', req.params.trip_id)
+        .where('trips.id', req.params.trip_id),
+      knex
+        .select('trips.start_date')
+        .count('city_trips.id AS cities_count')
+        .sum('city_trips.days AS total_days')
+        .from('trips')
+        .innerJoin('city_trips', 'trips.id', 'city_trips.trip_id')
+        .innerJoin('cities', 'cities.id', 'city_trips.city_id')
+        .groupBy('trips.start_date')
+        .where('trips.id', req.params.trip_id),
       ])
-    .then(data => res.json([data[0], reformatCities(data[1])]))
+    .then(data => res.json([data[0], reformatCities(data[1]), data[2]]))
     .catch(err => console.log(err));
   });
 
