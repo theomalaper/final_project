@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import { sample } from 'lodash'
 
@@ -63,7 +63,7 @@ const useApplicationData = () => {
     cityExpenses: {
       accommodationCost: {},
       transportCost: {}
-    }
+    },
   })
 
   useEffect(() => {
@@ -129,18 +129,16 @@ const useApplicationData = () => {
           axios.get(`/city-redirection/${state.city[0].id}`)
         ])
         .then(result => { 
-          console.log(result)
           const cityTripIdArr = result[0].data.map(cityTripObj => {
             return cityTripObj.city_id
           })
-          console.log(cityTripIdArr)
-          console.log(state.trip.starting_city)
+
           const availableCities = result[1].data.filter(cityAroundObj => {
             if (!cityTripIdArr.includes(cityAroundObj.ending_city) && cityAroundObj.ending_city !== state.trip.starting_city) {
               return cityAroundObj
             }
           }).map(cityAroundObj => cityAroundObj.ending_city)
-          console.log(availableCities)
+
           dispatch({ type: SET_REDIRECT_ID, redirect_id: sample(availableCities) })
         })
       })
@@ -149,12 +147,36 @@ const useApplicationData = () => {
       })
   }
 
+  const nextCity = () => {
+    Promise.all([
+      axios.get(`/city-trips/${state.trip.id}`),
+      axios.get(`/city-redirection/${state.citiesInTrip.length > 0 ? state.citiesInTrip[state.citiesInTrip.length - 1].id : state.trip.starting_city}`)
+    ])
+    .then(result => { 
+      const cityTripIdArr = result[0].data.map(cityTripObj => {
+        return cityTripObj.city_id
+      })
+
+      const availableCities = result[1].data.filter(cityAroundObj => {
+        if (!cityTripIdArr.includes(cityAroundObj.ending_city) && cityAroundObj.ending_city !== state.trip.starting_city) {
+          return cityAroundObj
+        }
+      }).map(cityAroundObj => cityAroundObj.ending_city)
+      
+      dispatch({ type: SET_REDIRECT_ID, redirect_id: sample(availableCities) })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   return {
     state,
     dispatch,
     submitTrip,
     SET_CITY_DATA,
     submitCityTrip,
+    nextCity,
   };
   
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 import {
   useParams
@@ -13,27 +13,32 @@ import { Redirect } from 'react-router-dom';
 export default function CityPage(props) {
   const { id } = useParams();
   const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, bus_price, train_price, plane_price, dispatch, trip, SET_CITY_DATA, redirect_id } = props;
+  const [loading, setLoading] = useState(true)
   
   useEffect(() => {
     if (trip.id) {
     axios.get(`/trips/${trip.id}/cities/${id}`)
       .then(all => {
         dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2], hostel_price: all.data[3], airbnb_price: all.data[4], hotel_price: all.data[5], bus_price: all.data[6], train_price: all.data[7], plane_price: all.data[8] })
+        setLoading(false)
       })
       .catch(err => console.log(err))}
   }, [trip]);
-  
-  if (city && city[0].id !== redirect_id) {
-    return <Redirect to={`/cities/${redirect_id}`} />
+
+  if (!loading && city && city[0].id !== redirect_id) {
+    return <Redirect to={`/`} />
   }
   return (
-    <div className="city-page">
+    <Fragment>
+    {loading && <div>Loading</div>}
+    {!loading && (
+     <div className="city-page">
       <header className="city-page-header">
         <div className="header-content">
           <h4>Welcome to</h4>
           <h1>{city ? city[0].name : null}</h1>
           <p>SPAIN</p>
-          {<CityTripForm submitCityTrip={props.submitCityTrip}/>}
+          {<CityTripForm submitCityTrip={props.submitCityTrip} nextCity={props.nextCity}/>}
         </div>
         <div className="background-overlay"></div>
         <img className="header-background" src={city ? city[0].image : null} alt="City Background"/>
@@ -121,5 +126,6 @@ export default function CityPage(props) {
         </div>
       </section>
     </div>
-  );
+  )};
+  </Fragment>)
 };
