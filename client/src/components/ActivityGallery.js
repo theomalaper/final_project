@@ -11,6 +11,7 @@ export default function ActivityGallery(props) {
         key={act.id}
         name={act.name}
         image={act.activity_image}
+        link_urls={act.link_urls}
       />
   ));
 };

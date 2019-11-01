@@ -16,7 +16,7 @@ import UserPage from './UserPage';
 import useApplicationData from '../hooks/useApplicationData';
 
 export default function App() {
-  const { state, submitTrip, dispatch, SET_CITY_DATA } = useApplicationData()
+  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip } = useApplicationData()
 
   return (
     <Router>
@@ -48,15 +48,17 @@ export default function App() {
               city={state.city}
               activities={state.activities}
               citiesInTrip={state.citiesInTrip}
-              hotel_price={state.hotel_price}
-              airbnb_price={state.airbnb_price}
-              hostel_price={state.hostel_price}
-              bus_price={state.bus_price}
-              train_price={state.train_price}
-              plane_price={state.plane_price}
+              hotel_price={state.cityExpenses.accommodationCost[3]}
+              airbnb_price={state.cityExpenses.accommodationCost[2]}
+              hostel_price={state.cityExpenses.accommodationCost[1]}
+              bus_price={state.cityExpenses.transportCost[1]}
+              train_price={state.cityExpenses.transportCost[2]}
+              plane_price={state.cityExpenses.transportCost[3]}
               dispatch={dispatch}
               trip={state.trip}
               SET_CITY_DATA={SET_CITY_DATA}
+              submitCityTrip={submitCityTrip}
+              redirect_id={state.redirect_id}
             />
           </Route>
           <Route exact path="/trips/:id">

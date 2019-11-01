@@ -5,8 +5,9 @@ import { sample } from 'lodash'
 const SET_USERS = 'SET_USERS';
 const SET_TRIP = 'SET_TRIP';
 const SET_CITY_DATA = 'SET_CITY_DATA';
-const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA'
-const SET_REDIRECT_ID = 'SET_REDIRECT_ID'
+const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA';
+const SET_REDIRECT_ID = 'SET_REDIRECT_ID';
+const SET_CITY_TRIP = 'SET_CITY_TRIP';
 
 const reducer = (state, action) => {
   const actions = {
@@ -23,12 +24,18 @@ const reducer = (state, action) => {
       city: action.city,
       activities: action.activities,
       citiesInTrip: action.citiesInTrip,
-      hostel_price: action.hostel_price,
-      airbnb_price: action.airbnb_price,
-      hotel_price: action.hotel_price,
-      bus_price: action.bus_price,
-      train_price: action.train_price,
-      plane_price: action.plane_price
+      cityExpenses: {
+        accommodationCost: {
+          1: action.hostel_price,
+          2: action.airbnb_price,
+          3: action.hotel_price,
+        },
+        transportCost: {
+          1: action.bus_price,
+          2: action.train_price,
+          3: action.plane_price,
+        }
+      }
     },
     SET_HOMEPAGE_DATA: {
       ...state,
@@ -37,6 +44,10 @@ const reducer = (state, action) => {
     SET_REDIRECT_ID: {
       ...state,
       redirect_id: action.redirect_id
+    },
+    SET_CITY_TRIP: {
+      ...state,
+      city_trip: action.city_trip
     }
   };
 
@@ -49,6 +60,10 @@ const reducer = (state, action) => {
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     trip: {},
+    cityExpenses: {
+      accommodationCost: {},
+      transportCost: {}
+    }
   })
 
   useEffect(() => {
@@ -86,11 +101,60 @@ const useApplicationData = () => {
       })
   }
 
+  const submitCityTrip = (accommodation_id, transport_id, days) => {
+    const trip_id = state.trip.id
+    const city_id = state.city[0].id
+    const avg_transport_cost = Math.round(state.cityExpenses.transportCost[transport_id].avg)
+    const avg_accommodation_cost = Math.round(state.cityExpenses.accommodationCost[accommodation_id].avg)
+
+    const city_trip = {
+      ...state.city_trip,
+      days,
+      city_id,
+      trip_id,
+      accommodation_id,
+      avg_accommodation_cost,
+      transport_id,
+      avg_transport_cost,
+    }
+
+    axios.post('/city_trips', { city_trip })
+      .then(result => {
+        dispatch({ type: SET_CITY_TRIP, city_trip: result.data })
+        return result.data
+      })
+      .then(() => {
+        Promise.all([
+          axios.get(`/city-trips/${state.trip.id}`),
+          axios.get(`/city-redirection/${state.city[0].id}`)
+        ])
+        .then(result => { 
+          console.log(result)
+          const cityTripIdArr = result[0].data.map(cityTripObj => {
+            return cityTripObj.city_id
+          })
+          console.log(cityTripIdArr)
+          console.log(state.trip.starting_city)
+          const availableCities = result[1].data.filter(cityAroundObj => {
+            if (!cityTripIdArr.includes(cityAroundObj.ending_city) && cityAroundObj.ending_city !== state.trip.starting_city) {
+              return cityAroundObj
+            }
+          }).map(cityAroundObj => cityAroundObj.ending_city)
+          console.log(availableCities)
+          dispatch({ type: SET_REDIRECT_ID, redirect_id: sample(availableCities) })
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return {
     state,
     dispatch,
     submitTrip,
-    SET_CITY_DATA
+    SET_CITY_DATA,
+    submitCityTrip,
   };
   
 }

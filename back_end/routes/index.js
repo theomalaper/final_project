@@ -111,7 +111,7 @@ module.exports = knex => {
       Promise.all([
         // Information about the city
         knex
-          .select('cities.name', 'cities.description', 'cities.city_image as image', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
+          .select('cities.id', 'cities.name', 'cities.description', 'cities.avg_daily_expense', 'cities.city_image as image', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
           .from('cities')
           .where("cities.id", req.params.city_id),
         
@@ -152,17 +152,44 @@ module.exports = knex => {
   });
 
   // POST New City when saving a city in the trip
-  router.post('/trips/:trip_id/cities/:city_id', (req, res, next) => {
-    Promise.all([
-      // We insert in transports and accommodations first because we need their IDs to insert them in the city_trips
-      knex('transports').insert({type: req.body.type}, {avg_cost: req.body.average_cost}),
-      knex('accommodations').insert({type: req.body.type}, {avg_cost: req.body.average_cost})
-    ])
-      .then((data) => {
-        knex('city_trips').insert({city_id: req.params.city_id}, {trip_id: req.params.trip_id}, {duration: req.body.duration}, {transport_id: data[0].id}, {accommodation_id: data[1].id})
-        .then(() => res.redirect('/'))
-        .catch(err => console.log(err))
-      });
+  router.post('/city_trips', (req, res, next) => {
+    knex('city_trips')
+      .insert({
+        days: req.body.city_trip.days,
+        city_id: req.body.city_trip.city_id,
+        trip_id: req.body.city_trip.trip_id,
+        accommodation_id: req.body.city_trip.accommodation_id,
+        avg_accommodation_cost: req.body.city_trip.avg_accommodation_cost,
+        transport_id: req.body.city_trip.transport_id,
+        avg_transport_cost: req.body.city_trip.avg_transport_cost,
+      })
+      .returning("*")
+      .then((result) => {
+        res.json(result[0])
+      })
+      .catch(err => console.log(err));
   });
+
+  router.get('/city-redirection/:starting_city', (req, res, next) => {
+    knex.select('ending_city')
+      .from('city_distances')
+      .where('starting_city', parseInt(req.params.starting_city))
+      .andWhere('distance', '<=', 506.0)
+      .then((result) => {
+        res.json(result)
+      })
+      .catch(err => console.log(err));
+  })
+
+  router.get('/city-trips/:trip_id', (req, res, next) => {
+    knex.select('city_id')
+      .from('city_trips')
+      .where('trip_id', req.params.trip_id)
+      .then((result) => {
+        res.json(result)
+      })
+      .catch(err => console.log(err));
+  })
+
   return router
 };

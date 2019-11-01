@@ -55,7 +55,7 @@ export default function Form(props) {
       </section>
       <section className="form-card--right">
         <button className="right-button danger" onClick={props.cancel}><img src="https://i.imgur.com/rY0xIbg.png"/></button>
-        <button className="right-button confirm"><img src="https://i.imgur.com/ye25mhM.png" alt="Check"/></button>
+        <button className="right-button confirm" onClick={props.save}><img src="https://i.imgur.com/ye25mhM.png" alt="Check"/></button>
       </section>
     </main>
   );
