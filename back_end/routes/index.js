@@ -103,10 +103,9 @@ module.exports = knex => {
   });
 
   // GET City Page
-  router.get('/trips/:trips_id/cities/:city_id', (req, res, next) => {
+  router.get('/trips/:trip_id/cities/:city_id', (req, res, next) => {
 
-    // Making a first promise to fetch the IDs needed for the request to the transport api, then we do all the other requests with the
-    knex.select('starting_city').from('trips').where('trips.id', req.params.trips_id).then(trip_id => {
+    const promise = city_id => {
     
       Promise.all([
         // Information about the city
@@ -128,7 +127,7 @@ module.exports = knex => {
           .from('cities')
           .innerJoin('city_trips', 'city_id', 'cities.id')
           .innerJoin('trips', 'trips.id', 'trip_id')
-          .where('trips.id', req.params.trips_id),
+          .where('trips.id', req.params.trip_id),
         
         // Avg prices of accommodations in that city
         request({uri:`http://localhost:3003/api/accommodation/hostel/${req.params.city_id}`, json:true}),
@@ -136,9 +135,9 @@ module.exports = knex => {
         request({uri:`http://localhost:3003/api/accommodation/hotel/${req.params.city_id}`, json:true}),
 
         // Avg prices of transports to that city
-        request({uri:`http://localhost:3003/api/transport/bus/${trip_id[0].starting_city}/${req.params.city_id}`, json:true}),
-        request({uri:`http://localhost:3003/api/transport/train/${trip_id[0].starting_city}/${req.params.city_id}`, json:true}),
-        request({uri:`http://localhost:3003/api/transport/plane/${trip_id[0].starting_city}/${req.params.city_id}`, json:true})
+        request({uri:`http://localhost:3003/api/transport/bus/${city_id[0].starting_city}/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/transport/train/${city_id[0].starting_city}/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/transport/plane/${city_id[0].starting_city}/${req.params.city_id}`, json:true})
 
       ])
         .then(data => {
@@ -147,7 +146,19 @@ module.exports = knex => {
         .catch(error => {
           console.log(error);
         });
+    }
+
+    knex.first('city_id').from('city_trips').where('trip_id', req.params.trip_id).orderBy('created_at', 'desc').then(data => {
+      if (!data) {
+        knex.select('starting_city').from('trips').where('trips.id', req.params.trip_id).then(promise).catch(err => console.log(err))
+      } else {
+        promise(data)
+      }
     })
+
+    // Making a first promise to fetch the IDs needed for the request to the transport api, then we do all the other requests with the
+    // knex.select('starting_city').from('trips').where('trips.id', req.params.trip_id).then(
+    // })
     .catch(err => console.log(err));
   });
 
