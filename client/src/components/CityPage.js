@@ -8,10 +8,11 @@ import Map from './Map';
 import ActivityList from './ActivityList';
 import ActivityGallery from './ActivityGallery';
 import CityTripForm from './cityTripForm';
+import { Redirect } from 'react-router-dom';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, bus_price, train_price, plane_price, dispatch, trip, SET_CITY_DATA } = props;
+  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, bus_price, train_price, plane_price, dispatch, trip, SET_CITY_DATA, redirect_id } = props;
   
   useEffect(() => {
     if (trip.id) {
@@ -22,6 +23,9 @@ export default function CityPage(props) {
       .catch(err => console.log(err))}
   }, [trip]);
   
+  if (city && city[0].id !== redirect_id) {
+    return <Redirect to={`/cities/${redirect_id}`} />
+  }
   return (
     <div className="city-page">
       <header className="city-page-header">
@@ -29,7 +33,7 @@ export default function CityPage(props) {
           <h4>Welcome to</h4>
           <h1>{city ? city[0].name : null}</h1>
           <p>SPAIN</p>
-          {<CityTripForm />}
+          {<CityTripForm submitCityTrip={props.submitCityTrip}/>}
         </div>
         <div className="background-overlay"></div>
         <img className="header-background" src={city ? city[0].image : null} alt="City Background"/>
@@ -96,8 +100,15 @@ export default function CityPage(props) {
             <div className="expense">
               <h5>Plane</h5>
               <div className="expense-content">
-                <img  className="hvr-float" src="https://image.flaticon.com/icons/svg/2149/2149092.svg"></img>
+                <img  className="hvr-float" src="https://image.flaticon.com/icons/svg/1525/1525933.svg"></img>
                 <p>${plane_price ? Math.round(plane_price.avg) : null}</p>
+              </div>
+            </div>
+            <div className="expense">
+              <h5>Daily Cost</h5>
+              <div className="expense-content">
+                <img  className="hvr-float" src="https://image.flaticon.com/icons/svg/2166/2166951.svg"></img>
+                <p>${city ? city[0].avg_daily_expense : null}</p>
               </div>
             </div>
           </div>

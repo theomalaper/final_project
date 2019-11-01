@@ -8,7 +8,7 @@ const SHOW = 'SHOW'
 const FORM = 'FORM'
 const CONFIRM = 'CONFIRM'
 
-export default function CityTripForm() {
+export default function CityTripForm(props) {
   const { mode, transition, back } = useVisualMode(SHOW)
   const [days, setDays] = useState(1)
   const [accommodation, setAccommodation] = useState(0)
@@ -25,6 +25,7 @@ export default function CityTripForm() {
       {mode === FORM &&  (
         <Form 
           cancel={() => back()} 
+          save={() => props.submitCityTrip(accommodation, transport, days)}
           setDays={setDays}
           days={days}
           transport={transport}
