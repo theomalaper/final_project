@@ -24,38 +24,29 @@ const reformatActivities = activities => {
 const reformatCities = cities => {
   const output = {};
   for(let city of cities) {
+    const link = {
+      id: city.link_id,
+      type: city.link_type,
+      name: city.link_name,
+      url: city.link_url
+    };
+    
+    const activity = {
+      activity_id: city.activity_id,
+      activity_name: city.activity_name,
+      activity_description: city.activity_description,
+      activity_image: city.activity_image,
+      activity_links: [link]
+    };
+
     if (!output[city.id]) {
       output[city.id] = city
     }
 
     if (output[city.id].activity_id && !output[city.id].activities) {
-      output[city.id].activities = [{
-        activity_id: city.activity_id,
-        activity_name: city.activity_name,
-        activity_description: city.activity_description,
-        activity_image: city.activity_image,
-        activity_links: [{
-          id: city.link_id,
-          type: city.link_type,
-          name: city.link_name,
-          url: city.link_url
-        }]
-      }];
+      output[city.id].activities = [activity];
     } else if (output[city.id].activity_id) {
-      const link = {
-        id: city.link_id,
-        type: city.link_type,
-        name: city.link_name,
-        url: city.link_url
-      };
       
-      const activity = {
-        activity_id: city.activity_id,
-        activity_name: city.activity_name,
-        activity_description: city.activity_description,
-        activity_image: city.activity_image,
-        activity_links: [link]
-      };
 
       const found = output[city.id].activities.find(e => e.activity_id === city.activity_id);
       if (found) {
