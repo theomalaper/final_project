@@ -20,6 +20,32 @@ const reformatActivities = activities => {
   return Object.values(output);
 };
 
+const reformatCities = cities => {
+  const output = {};
+  for(let city of cities) {
+    if (!output[city.id]) {
+      output[city.id] = city
+    }
+
+    if (output[city.id].activity_id && !output[city.id].activities) {
+      output[city.id].activities = [{
+        activity_id: city.activity_id,
+        activity_name: city.activity_name,
+        activity_description: city.activity_description,
+        activity_image: city.activity_image
+      }];
+    } else if (output[city.id].activity_id) {
+      output[city.id].activities.push({
+         activity_id: city.activity_id,
+        activity_name: city.activity_name,
+        activity_description: city.activity_description,
+        activity_image: city.activity_image
+      })
+    }
+  }
+  return Object.values(output);
+};
+
 module.exports = knex => {
   // GET Homepage
   router.get('/homepage', (req, res, next) => {
@@ -42,7 +68,7 @@ module.exports = knex => {
         .innerJoin('zones', 'trips.zone_id', 'zones.id')
         .where('trips.id', req.params.trip_id),
       knex
-        .select('cities.id', 'cities.name', 'cities.country', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation_type', 'city_trips.avg_accommodation_cost AS accomodation_cost', 'transports.type AS transport_type', 'city_trips.avg_transport_cost AS transport_cost', 'activities.id AS activity_id')
+        .select('city_trips.id', 'cities.id AS city_id', 'cities.name', 'cities.country', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation_type', 'city_trips.avg_accommodation_cost AS accomodation_cost', 'transports.type AS transport_type', 'city_trips.avg_transport_cost AS transport_cost', 'activities.id AS activity_id', 'activities.name AS activity_name', 'activities.description AS activity_description', 'activities.activity_image')
         .from('cities')
         .innerJoin('city_trips', 'cities.id', 'city_trips.city_id')
         .innerJoin('trips', 'trips.id', 'city_trips.trip_id')
@@ -52,7 +78,7 @@ module.exports = knex => {
         .leftJoin('activities', 'selected_activities.activity_id', 'activities.id')
         .where('trips.id', req.params.trip_id)
       ])
-    .then(data => res.json(data))
+    .then(data => res.json([data[0], reformatCities(data[1])]))
     .catch(err => console.log(err));
   });
 
