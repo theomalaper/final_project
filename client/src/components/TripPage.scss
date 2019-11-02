@@ -14,11 +14,10 @@
   border-radius: 10px;
 
   .city-title {
-  background-image: url('http://www.taxis-paris.fr/images/bandeau1.jpg');
-  background-size: 100% 100px;;
-  color: white;
-  padding: 10px;
-  text-align: center;
+    border: solid 1px black;
+    background-size: 100% 100px;;
+    padding: 10px;
+    text-align: center;
   }
 
   .content {

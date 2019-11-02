@@ -220,6 +220,7 @@ const useApplicationData = () => {
     submitCityTrip,
     nextCity,
     setCityTripActivity,
+    SET_TRIP_DATA
   };
   
 }

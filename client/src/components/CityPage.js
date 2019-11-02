@@ -4,7 +4,7 @@ import {
   useParams
 } from "react-router-dom";
 import './CityPage.scss';
-import Map from './Map';
+import MapCity from './MapCity';
 import ActivityList from './ActivityList';
 import ActivityGallery from './ActivityGallery';
 import CityTripForm from './cityTripForm';
@@ -22,7 +22,8 @@ export default function CityPage(props) {
         dispatch({ type: SET_CITY_DATA, city: all.data[0], activities: all.data[1], citiesInTrip: all.data[2], hostel_price: all.data[3], airbnb_price: all.data[4], hotel_price: all.data[5], bus_price: all.data[6], train_price: all.data[7], plane_price: all.data[8] })
         setLoading(false)
       })
-      .catch(err => console.log(err))}
+      .catch(err => console.log(err))
+    }
   }, [trip]);
 
   if (!loading && city && city[0].id !== redirect_id) {
@@ -37,7 +38,7 @@ export default function CityPage(props) {
         <div className="header-content">
           <h4>Welcome to</h4>
           <h1>{city ? city[0].name : null}</h1>
-          <p>SPAIN</p>
+          <p>{city ? city[0].country : null}</p>
           {<CityTripForm submitCityTrip={props.submitCityTrip} nextCity={props.nextCity}/>}
         </div>
         <div className="background-overlay"></div>
@@ -63,7 +64,7 @@ export default function CityPage(props) {
         </div>
         <div className="right-side">
           <div className="city-map">
-            <Map citiesInTrip={citiesInTrip} city={city}/>
+            <MapCity citiesInTrip={citiesInTrip} city={city}/>
           </div>
           <h3>Expenses</h3>
           <div className="city-avg-expenses">
