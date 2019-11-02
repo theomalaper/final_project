@@ -234,6 +234,7 @@ const useApplicationData = () => {
     setCityTripActivity,
     SET_TRIP_DATA,
     finalizeTrip,
+  }
 }
 
 export default useApplicationData;
