@@ -96,9 +96,17 @@ module.exports = knex => {
         .leftJoin('selected_activities', 'selected_activities.city_trip_id', 'city_trips.id')
         .leftJoin('activities', 'selected_activities.activity_id', 'activities.id')
         .leftJoin('activity_links', 'activity_links.activity_id', 'activities.id')
-        .where('trips.id', req.params.trip_id)
+        .where('trips.id', req.params.trip_id),
+
+      // Information about cities already added in the trip to add them on the map
+      knex
+      .select('cities.id', 'coordinate_latitude', 'coordinate_longitude', 'city_trips.accommodation_id')
+      .from('cities')
+      .innerJoin('city_trips', 'city_id', 'cities.id')
+      .innerJoin('trips', 'trips.id', 'trip_id')
+      .where('trips.id', req.params.trip_id),
       ])
-    .then(data => res.json([data[0], reformatCities(data[1])]))
+    .then(data => res.json([data[0], reformatCities(data[1]), data[2]]))
     .catch(err => console.log(err));
   });
 
@@ -179,7 +187,7 @@ module.exports = knex => {
 
         // Information about cities already added in the trip to add them on the map
         knex
-          .select('cities.id', 'coordinate_latitude', 'coordinate_longitude')
+          .select('cities.id', 'coordinate_latitude', 'coordinate_longitude', 'city_trips.accommodation_id')
           .from('cities')
           .innerJoin('city_trips', 'city_id', 'cities.id')
           .innerJoin('trips', 'trips.id', 'trip_id')
