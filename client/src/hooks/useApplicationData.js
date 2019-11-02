@@ -64,6 +64,7 @@ const reducer = (state, action) => {
     SET_CITY_TRIP_ACTIVITY: {
       ...state,
       cityTripActivities: action.cityTripActivities
+    },
     SET_TRIP_DATA: {
       ...state,
       tripInfo: action.tripInfo,
