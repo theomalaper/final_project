@@ -78,8 +78,13 @@ module.exports = knex => {
     Promise.all([
       knex
         .select('trips.name', 'isPlanning', 'starting_city', 'start_date', 'budget', 'traveller_nb', 'travel_type', 'zones.name AS zone', 'zones.coordinate_longitude', 'zones.coordinate_latitude', 'zones.zoom')
+        .count('city_trips.id AS cities_count')
+        .sum('city_trips.days AS total_days')
         .from('trips')
+        .innerJoin('city_trips', 'trips.id', 'city_trips.trip_id')
+        .innerJoin('cities', 'cities.id', 'city_trips.city_id')
         .innerJoin('zones', 'trips.zone_id', 'zones.id')
+        .groupBy('trips.name', 'isPlanning', 'starting_city', 'start_date', 'budget', 'traveller_nb', 'travel_type', 'zones.name', 'zones.coordinate_longitude', 'zones.coordinate_latitude', 'zones.zoom')
         .where('trips.id', req.params.trip_id),
       knex
         .select('city_trips.id', 'cities.id AS city_id', 'cities.name', 'cities.country', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation_type', 'city_trips.avg_accommodation_cost AS accomodation_cost', 'transports.type AS transport_type', 'city_trips.avg_transport_cost AS transport_cost', 'activities.id AS activity_id', 'activities.name AS activity_name', 'activities.description AS activity_description', 'activities.activity_image', 'activity_links.id AS link_id', 'activity_links.type AS link_type', 'activity_links.name AS link_name', 'activity_links.url AS link_url')
@@ -91,18 +96,9 @@ module.exports = knex => {
         .leftJoin('selected_activities', 'selected_activities.city_trip_id', 'city_trips.id')
         .leftJoin('activities', 'selected_activities.activity_id', 'activities.id')
         .leftJoin('activity_links', 'activity_links.activity_id', 'activities.id')
-        .where('trips.id', req.params.trip_id),
-      knex
-        .select('trips.start_date')
-        .count('city_trips.id AS cities_count')
-        .sum('city_trips.days AS total_days')
-        .from('trips')
-        .innerJoin('city_trips', 'trips.id', 'city_trips.trip_id')
-        .innerJoin('cities', 'cities.id', 'city_trips.city_id')
-        .groupBy('trips.start_date')
-        .where('trips.id', req.params.trip_id),
+        .where('trips.id', req.params.trip_id)
       ])
-    .then(data => res.json([data[0], reformatCities(data[1]), data[2]]))
+    .then(data => res.json([data[0], reformatCities(data[1])]))
     .catch(err => console.log(err));
   });
 
