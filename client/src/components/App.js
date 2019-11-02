@@ -69,6 +69,7 @@ export default function App() {
             <TripPage
               tripInfo={state.tripInfo}
               citiesInfo={state.citiesInfo}
+              allCities={state.allCities}
               dispatch={dispatch}
               SET_TRIP_DATA={SET_TRIP_DATA}
             />

@@ -11,12 +11,12 @@ import './TripPage.scss';
 
 export default function TripPage(props) {
   const { trip_id } = useParams();
-  const { tripInfo, citiesInfo, dispatch, SET_TRIP_DATA } = props;
+  const { tripInfo, citiesInfo, allCities, dispatch, SET_TRIP_DATA } = props;
 
   useEffect(() => {
     axios.get(`/trips/${trip_id}`)
       .then(all => {
-        dispatch({ type: SET_TRIP_DATA, tripInfo: all.data[0], citiesInfo: all.data[1] })
+        dispatch({ type: SET_TRIP_DATA, tripInfo: all.data[0], citiesInfo: all.data[1], allCities: [all.data[2]] })
       })
       .catch(err => console.log(err))
   }, []);
@@ -29,7 +29,7 @@ export default function TripPage(props) {
     return (
       <Fragment>
         <header className="map">
-          <MapTrip />
+          <MapTrip allCities={allCities} latitude={tripInfo[0].coordinate_latitude} longitude={tripInfo[0].coordinate_longitude} zoom={tripInfo[0].zoom}/>
         </header>
         <h1 className="trip-title">{tripInfo[0].name}</h1>
         <TripCityList citiesInfo={citiesInfo}/>

@@ -3,22 +3,23 @@ import GoogleMapReact from 'google-map-react';
 import Pin from './Pin';
  
 export default function MapTrip(props) {
-  const { citiesInTrip, city } = props;
+  const { allCities, latitude, longitude, zoom } = props;
 
-  if (city && citiesInTrip) {
+  if (props) {
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '50vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`, language: 'en' }}
-          defaultCenter={{lat: city[0].coordinate_latitude, lng: city[0].coordinate_longitude }}
-          defaultZoom={city[0].zoom}
+          defaultCenter={{lat: latitude, lng: longitude }}
+          defaultZoom={zoom}
         >
-          {citiesInTrip.map(city =>
+          {allCities[0].map(city =>
           <Pin
             key={city.id}
             lat={city.coordinate_latitude}
             lng={city.coordinate_longitude}
+            accId={city.accommodation_id}
           />
           )}
         </GoogleMapReact>
