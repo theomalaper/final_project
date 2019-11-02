@@ -37,7 +37,7 @@ export default function CityPage(props) {
         <div className="header-content">
           <h4>Welcome to</h4>
           <h1>{city ? city[0].name : null}</h1>
-          <p>SPAIN</p>
+          <p>{city ? city[0].country : null}</p>
           {<CityTripForm submitCityTrip={props.submitCityTrip} nextCity={props.nextCity}/>}
         </div>
         <div className="background-overlay"></div>
