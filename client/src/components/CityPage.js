@@ -26,6 +26,9 @@ export default function CityPage(props) {
     }
   }, [trip]);
 
+  if (trip.isPlanning === false) {
+    return <Redirect to={`/trips/${trip.id}`} />
+  }
   if (!loading && city && city[0].id !== redirect_id) {
     return <Redirect to={`/`} />
   }
@@ -39,7 +42,7 @@ export default function CityPage(props) {
           <h4>Welcome to</h4>
           <h1>{city ? city[0].name : null}</h1>
           <p>{city ? city[0].country : null}</p>
-          {<CityTripForm submitCityTrip={props.submitCityTrip} nextCity={props.nextCity}/>}
+          {<CityTripForm submitCityTrip={props.submitCityTrip} nextCity={props.nextCity} finalizeTrip={props.finalizeTrip}/>}
         </div>
         <div className="background-overlay"></div>
         <img className="header-background" src={city ? city[0].image : null} alt="City Background"/>

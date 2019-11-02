@@ -17,7 +17,7 @@ import useApplicationData from '../hooks/useApplicationData';
 
 export default function App() {
   
-  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity, setCityTripActivity, SET_TRIP_DATA } = useApplicationData()
+  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity, setCityTripActivity, SET_TRIP_DATA, finalizeTrip } = useApplicationData()
 
   return (
     <Router>
@@ -62,6 +62,7 @@ export default function App() {
               nextCity={nextCity}
               redirect_id={state.redirect_id}
               setCityTripActivity={setCityTripActivity}
+              finalizeTrip={finalizeTrip}
             />
           </Route>
           <Route exact path="/trips/:trip_id">
