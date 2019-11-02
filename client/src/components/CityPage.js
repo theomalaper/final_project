@@ -12,10 +12,10 @@ import { Redirect } from 'react-router-dom';
 
 export default function CityPage(props) {
   const { id } = useParams();
-  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, bus_price, train_price, plane_price, dispatch, trip, SET_CITY_DATA, redirect_id } = props;
+  const { city, activities, citiesInTrip, hostel_price, airbnb_price, hotel_price, bus_price, train_price, plane_price, dispatch, trip, SET_CITY_DATA, redirect_id, setCityTripActivity} = props;
   const [loading, setLoading] = useState(true)
   
-  useEffect(() => {
+  useEffect(() => { 
     if (trip.id) {
     axios.get(`/trips/${trip.id}/cities/${id}`)
       .then(all => {
@@ -58,7 +58,7 @@ export default function CityPage(props) {
           </div>
           <div className="city-activity-list">
             <h3>Browse Experiences</h3>
-            <ActivityList activities={activities}/>
+            <ActivityList activities={activities} setCityTripActivity={setCityTripActivity}/>
           </div>
         </div>
         <div className="right-side">

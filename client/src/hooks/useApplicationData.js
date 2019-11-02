@@ -8,6 +8,9 @@ const SET_CITY_DATA = 'SET_CITY_DATA';
 const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA';
 const SET_REDIRECT_ID = 'SET_REDIRECT_ID';
 const SET_CITY_TRIP = 'SET_CITY_TRIP';
+const ADD_CITY_TRIP_ACTIVITY = 'ADD_CITY_TRIP_ACTIVITY'
+const REMOVE_CITY_TRIP_ACTIVITY = 'REMOVE_CITY_TRIP_ACTIVITY'
+const SET_CITY_TRIP_ACTIVITY = 'SET_CITY_TRIP_ACTIVITY'
 
 const reducer = (state, action) => {
   const actions = {
@@ -48,6 +51,18 @@ const reducer = (state, action) => {
     SET_CITY_TRIP: {
       ...state,
       city_trip: action.city_trip
+    },
+    ADD_CITY_TRIP_ACTIVITY: {
+      ...state,
+      cityTripActivities: action.cityTripActivities
+    },
+    REMOVE_CITY_TRIP_ACTIVITY: {
+      ...state,
+      cityTripActivities: action.updatedcityTripActivities
+    },
+    SET_CITY_TRIP_ACTIVITY: {
+      ...state,
+      cityTripActivities: action.cityTripActivities
     }
   };
 
@@ -64,6 +79,7 @@ const useApplicationData = () => {
       accommodationCost: {},
       transportCost: {}
     },
+    cityTripActivities: []
   })
 
   useEffect(() => {
@@ -118,11 +134,20 @@ const useApplicationData = () => {
       avg_transport_cost,
     }
 
+    const selectedActivities = [...state.cityTripActivities]
+
     axios.post('/city_trips', { city_trip })
       .then(result => {
         dispatch({ type: SET_CITY_TRIP, city_trip: result.data })
         return result.data
       })
+      .then(result => {
+        axios.post('/selected-activities', { selectedActivities, result })
+        return result.data
+      })
+      .then(() => {
+        dispatch({ type: SET_CITY_TRIP_ACTIVITY, cityTripActivities: [] })
+      }) 
       .then(() => {
         Promise.all([
           axios.get(`/city-trips/${state.trip.id}`),
@@ -170,6 +195,17 @@ const useApplicationData = () => {
     })
   }
 
+  const setCityTripActivity = (activity_id, pinned) => {
+    if (!pinned) {
+      const cityTripActivities = [ ...state.cityTripActivities, activity_id ]
+      dispatch({ type: ADD_CITY_TRIP_ACTIVITY, cityTripActivities })
+    } else {
+      const cityTripActivities = [...state.cityTripActivities]
+      const updatedcityTripActivities = cityTripActivities.filter(act => act !== activity_id)
+      dispatch({ type: REMOVE_CITY_TRIP_ACTIVITY, updatedcityTripActivities })
+    }
+  }
+
   return {
     state,
     dispatch,
@@ -177,6 +213,7 @@ const useApplicationData = () => {
     SET_CITY_DATA,
     submitCityTrip,
     nextCity,
+    setCityTripActivity,
   };
   
 }

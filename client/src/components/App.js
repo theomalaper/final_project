@@ -16,7 +16,7 @@ import UserPage from './UserPage';
 import useApplicationData from '../hooks/useApplicationData';
 
 export default function App() {
-  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity } = useApplicationData()
+  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity, setCityTripActivity } = useApplicationData()
 
   return (
     <Router>
@@ -60,6 +60,7 @@ export default function App() {
               submitCityTrip={submitCityTrip}
               nextCity={nextCity}
               redirect_id={state.redirect_id}
+              setCityTripActivity={setCityTripActivity}
             />
           </Route>
           <Route exact path="/trips/:id">

@@ -206,5 +206,22 @@ module.exports = knex => {
       .catch(err => console.log(err));
   })
 
+  router.post('/selected-activities', (req, res, next) => {
+    const activitiesToInsert = req.body.selectedActivities.map(activity_id => {
+      return {
+        activity_id,
+        city_trip_id: req.body.result.id
+      }
+    })
+
+    knex('selected_activities')
+      .insert(activitiesToInsert)
+      .returning("*")
+      .then((result) => {
+        res.json(result[0])
+      })
+      .catch(err => console.log(err));
+  });
+
   return router
 };
