@@ -8,6 +8,7 @@ const SET_CITY_DATA = 'SET_CITY_DATA';
 const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA';
 const SET_REDIRECT_ID = 'SET_REDIRECT_ID';
 const SET_CITY_TRIP = 'SET_CITY_TRIP';
+const SET_TRIP_DATA = 'SET_TRIP_DATA';
 
 const reducer = (state, action) => {
   const actions = {
@@ -48,6 +49,11 @@ const reducer = (state, action) => {
     SET_CITY_TRIP: {
       ...state,
       city_trip: action.city_trip
+    },
+    SET_TRIP_DATA: {
+      ...state,
+      tripInfo: action.tripInfo,
+      citiesInfo: action.citiesInfo
     }
   };
 

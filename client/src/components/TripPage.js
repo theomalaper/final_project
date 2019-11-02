@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import axios from 'axios';
 import {
   useParams
 } from "react-router-dom";
@@ -7,8 +8,17 @@ import Map from './Map';
 import './TripPage.scss';
 
 
-export default function TripPage() {
-  const { id } = useParams();
+export default function TripPage(props) {
+  const { trip_id } = useParams();
+  const { tripInfo, citiesInfo, dispatch, SET_TRIP_DATA } = props;
+
+  // useEffect(() => {
+  //   axios.get(`/trips/1`)
+  //     .then(all => {
+  //       dispatch({ type: SET_TRIP_DATA, tripInfo: all.data[0], citiesInfo: all.data[1] })
+  //     })
+  //     .catch(err => console.log(err))}
+  // , []);
 
   return (
     <Fragment>
