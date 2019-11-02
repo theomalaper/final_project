@@ -65,7 +65,7 @@ export default function App() {
               finalizeTrip={finalizeTrip}
             />
           </Route>
-          <Route exact path="/trips/:id">
+          <Route exact path="/trips/:trip_id">
             <TripPage
               tripInfo={state.tripInfo}
               citiesInfo={state.citiesInfo}

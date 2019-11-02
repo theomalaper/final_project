@@ -87,7 +87,7 @@ module.exports = knex => {
         .groupBy('trips.name', 'isPlanning', 'starting_city', 'start_date', 'budget', 'traveller_nb', 'travel_type', 'zones.name', 'zones.coordinate_longitude', 'zones.coordinate_latitude', 'zones.zoom')
         .where('trips.id', req.params.trip_id),
       knex
-        .select('city_trips.id', 'cities.id AS city_id', 'cities.name', 'cities.country', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accomodation_type', 'city_trips.avg_accommodation_cost AS accomodation_cost', 'transports.type AS transport_type', 'city_trips.avg_transport_cost AS transport_cost', 'activities.id AS activity_id', 'activities.name AS activity_name', 'activities.description AS activity_description', 'activities.activity_image', 'activity_links.id AS link_id', 'activity_links.type AS link_type', 'activity_links.name AS link_name', 'activity_links.url AS link_url')
+        .select('city_trips.id', 'cities.id AS city_id', 'cities.name', 'cities.country', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.avg_daily_expense', 'cities.city_image', 'city_trips.days', 'accommodations.type AS accommodation_type', 'city_trips.avg_accommodation_cost AS accommodation_cost', 'transports.type AS transport_type', 'city_trips.avg_transport_cost AS transport_cost', 'activities.id AS activity_id', 'activities.name AS activity_name', 'activities.description AS activity_description', 'activities.activity_image', 'activity_links.id AS link_id', 'activity_links.type AS link_type', 'activity_links.name AS link_name', 'activity_links.url AS link_url')
         .from('cities')
         .innerJoin('city_trips', 'cities.id', 'city_trips.city_id')
         .innerJoin('trips', 'trips.id', 'city_trips.trip_id')
@@ -166,7 +166,7 @@ module.exports = knex => {
       Promise.all([
         // Information about the city
         knex
-          .select('cities.id', 'cities.name', 'cities.description', 'cities.avg_daily_expense', 'cities.city_image as image', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
+          .select('cities.id', 'cities.name', 'cities.country', 'cities.description', 'cities.avg_daily_expense', 'cities.city_image as image', 'cities.coordinate_latitude', 'cities.coordinate_longitude', 'cities.zoom')
           .from('cities')
           .where("cities.id", req.params.city_id),
         

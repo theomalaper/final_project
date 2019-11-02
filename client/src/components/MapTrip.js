@@ -2,7 +2,7 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import Pin from './Pin';
  
-export default function Map(props) {
+export default function MapTrip(props) {
   const { citiesInTrip, city } = props;
 
   if (city && citiesInTrip) {
@@ -14,10 +14,6 @@ export default function Map(props) {
           defaultCenter={{lat: city[0].coordinate_latitude, lng: city[0].coordinate_longitude }}
           defaultZoom={city[0].zoom}
         >
-          <Pin
-            lat={city[0].coordinate_latitude}
-            lng={city[0].coordinate_longitude}
-          />
           {citiesInTrip.map(city =>
           <Pin
             key={city.id}
