@@ -134,12 +134,18 @@ module.exports = knex => {
   })
 
   // PUT Trip Page when saving the trip
-  router.put('/trips/:id', (req, res, next) => {
+  router.put('/trips/:trip_id', (req, res, next) => {
     knex('trips')
-      .where('id', req.params.id)
-      .update({name: req.body.name}, {is_planning: false})
-      .then(() => res.redirect('/'))
-      .catch(err => console.log(err))
+      .where('id', req.params.trip_id)
+      .update({
+        name: req.body.tripName,
+        isPlanning: false
+      })
+      .returning("*")
+      .then((result) => {
+        res.json(result)
+      })
+      .catch(err => console.log(err));
   });
 
   // DELETE Trip

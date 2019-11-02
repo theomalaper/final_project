@@ -2,24 +2,27 @@ import React, { useState } from 'react'
 import Show from './Show'
 import Form from './Form'
 import Confirm from './Confirm'
+import Finalize from './Finalize'
 import useVisualMode from '../../hooks/useVisualMode'
 
 const SHOW = 'SHOW'
 const FORM = 'FORM'
 const CONFIRM = 'CONFIRM'
+const FINALIZE ='FINALIZE'
 
 export default function CityTripForm(props) {
   const { mode, transition, back } = useVisualMode(SHOW)
   const [days, setDays] = useState(1)
   const [accommodation, setAccommodation] = useState(0)
   const [transport, setTransport] = useState(0)
+  const [tripName, setTripName] = useState("")
 
   return (
     <div className="city-trip-form">
       {mode === SHOW && (
         <Show 
           onAdd={() => transition(FORM)} 
-          onFinish={() => transition(CONFIRM)} 
+          onFinish={() => transition(FINALIZE)} 
           nextCity={() => props.nextCity()}
         />
       )}
@@ -35,9 +38,12 @@ export default function CityTripForm(props) {
           setAccommodation={setAccommodation}
         />
       )}
-      {mode === CONFIRM && (
-        <Confirm 
+      {mode === FINALIZE && (
+        <Finalize
           cancel={() => back()}
+          tripName={tripName}
+          setTripName={setTripName}
+          finalizeTrip={() => props.finalizeTrip(tripName)}
         />
       )}
     </div>

@@ -212,6 +212,18 @@ const useApplicationData = () => {
     }
   }
 
+  const finalizeTrip = tripName => {
+    const trip_id = state.trip.id
+
+    axios.put(`/trips/${trip_id}`, { tripName })
+      .then(result => {
+        dispatch({ type: SET_TRIP, trip: result.data[0]})
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return {
     state,
     dispatch,
@@ -220,6 +232,8 @@ const useApplicationData = () => {
     submitCityTrip,
     nextCity,
     setCityTripActivity,
+    SET_TRIP_DATA,
+    finalizeTrip,
   };
   
 }

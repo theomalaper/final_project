@@ -10,7 +10,7 @@ export default function Show({ onAdd, onFinish, nextCity }) {
       </button>
       <button onClick={onFinish}>
         <div className="finish-icon">
-          <img className="hvr-grow" src="https://i.imgur.com/Ph5gTKO.png" alt="Finish"/>
+          <img className="hvr-grow" src="https://i.imgur.com/u89dLTh.png" alt="Finish"/>
         </div>
       </button>
       <button onClick={nextCity}>
