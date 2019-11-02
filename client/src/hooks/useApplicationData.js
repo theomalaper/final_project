@@ -11,6 +11,7 @@ const SET_CITY_TRIP = 'SET_CITY_TRIP';
 const ADD_CITY_TRIP_ACTIVITY = 'ADD_CITY_TRIP_ACTIVITY'
 const REMOVE_CITY_TRIP_ACTIVITY = 'REMOVE_CITY_TRIP_ACTIVITY'
 const SET_CITY_TRIP_ACTIVITY = 'SET_CITY_TRIP_ACTIVITY'
+const SET_TRIP_DATA = 'SET_TRIP_DATA';
 
 const reducer = (state, action) => {
   const actions = {
@@ -63,6 +64,10 @@ const reducer = (state, action) => {
     SET_CITY_TRIP_ACTIVITY: {
       ...state,
       cityTripActivities: action.cityTripActivities
+    SET_TRIP_DATA: {
+      ...state,
+      tripInfo: action.tripInfo,
+      citiesInfo: action.citiesInfo
     }
   };
 
