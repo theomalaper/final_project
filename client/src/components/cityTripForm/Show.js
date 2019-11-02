@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function Show({ onAdd, onFinish }) {
+export default function Show({ onAdd, onFinish, nextCity }) {
   return (
     <main className="show-card">
       <button onClick={onAdd}>
@@ -13,7 +13,7 @@ export default function Show({ onAdd, onFinish }) {
           <img className="hvr-grow" src="https://i.imgur.com/Ph5gTKO.png" alt="Finish"/>
         </div>
       </button>
-      <button>
+      <button onClick={nextCity}>
         <div className="next-icon">
          <img className="hvr-grow" src="https://i.imgur.com/KWN3vlN.png" alt="Next"/>
         </div>

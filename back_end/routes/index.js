@@ -155,6 +155,7 @@ module.exports = knex => {
   router.get('/trips/:trip_id/cities/:city_id', (req, res, next) => {
 
     const promise = city_id => {
+      console.log(city_id)
     
       Promise.all([
         // Information about the city
@@ -184,9 +185,9 @@ module.exports = knex => {
         request({uri:`http://localhost:3003/api/accommodation/hotel/${req.params.city_id}`, json:true}),
 
         // Avg prices of transports to that city
-        request({uri:`http://localhost:3003/api/transport/bus/${city_id[0].starting_city}/${req.params.city_id}`, json:true}),
-        request({uri:`http://localhost:3003/api/transport/train/${city_id[0].starting_city}/${req.params.city_id}`, json:true}),
-        request({uri:`http://localhost:3003/api/transport/plane/${city_id[0].starting_city}/${req.params.city_id}`, json:true})
+        request({uri:`http://localhost:3003/api/transport/bus/${city_id.city_id}/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/transport/train/${city_id.city_id}/${req.params.city_id}`, json:true}),
+        request({uri:`http://localhost:3003/api/transport/plane/${city_id.city_id}/${req.params.city_id}`, json:true})
 
       ])
         .then(data => {
@@ -199,7 +200,7 @@ module.exports = knex => {
 
     knex.first('city_id').from('city_trips').where('trip_id', req.params.trip_id).orderBy('created_at', 'desc').then(data => {
       if (!data) {
-        knex.select('starting_city').from('trips').where('trips.id', req.params.trip_id).then(promise).catch(err => console.log(err))
+        knex.select('starting_city AS city_id').from('trips').where('trips.id', req.params.trip_id).then(data => promise(data[0])).catch(err => console.log(err))
       } else {
         promise(data)
       }
@@ -250,6 +251,23 @@ module.exports = knex => {
       })
       .catch(err => console.log(err));
   })
+
+  router.post('/selected-activities', (req, res, next) => {
+    const activitiesToInsert = req.body.selectedActivities.map(activity_id => {
+      return {
+        activity_id,
+        city_trip_id: req.body.result.id
+      }
+    })
+
+    knex('selected_activities')
+      .insert(activitiesToInsert)
+      .returning("*")
+      .then((result) => {
+        res.json(result[0])
+      })
+      .catch(err => console.log(err));
+  });
 
   return router
 };

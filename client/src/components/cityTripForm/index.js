@@ -20,6 +20,7 @@ export default function CityTripForm(props) {
         <Show 
           onAdd={() => transition(FORM)} 
           onFinish={() => transition(CONFIRM)} 
+          nextCity={() => props.nextCity()}
         />
       )}
       {mode === FORM &&  (

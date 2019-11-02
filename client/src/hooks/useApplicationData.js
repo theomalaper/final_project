@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import { sample } from 'lodash'
 
@@ -8,6 +8,9 @@ const SET_CITY_DATA = 'SET_CITY_DATA';
 const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA';
 const SET_REDIRECT_ID = 'SET_REDIRECT_ID';
 const SET_CITY_TRIP = 'SET_CITY_TRIP';
+const ADD_CITY_TRIP_ACTIVITY = 'ADD_CITY_TRIP_ACTIVITY'
+const REMOVE_CITY_TRIP_ACTIVITY = 'REMOVE_CITY_TRIP_ACTIVITY'
+const SET_CITY_TRIP_ACTIVITY = 'SET_CITY_TRIP_ACTIVITY'
 const SET_TRIP_DATA = 'SET_TRIP_DATA';
 
 const reducer = (state, action) => {
@@ -50,6 +53,17 @@ const reducer = (state, action) => {
       ...state,
       city_trip: action.city_trip
     },
+    ADD_CITY_TRIP_ACTIVITY: {
+      ...state,
+      cityTripActivities: action.cityTripActivities
+    },
+    REMOVE_CITY_TRIP_ACTIVITY: {
+      ...state,
+      cityTripActivities: action.updatedcityTripActivities
+    },
+    SET_CITY_TRIP_ACTIVITY: {
+      ...state,
+      cityTripActivities: action.cityTripActivities
     SET_TRIP_DATA: {
       ...state,
       tripInfo: action.tripInfo,
@@ -69,7 +83,8 @@ const useApplicationData = () => {
     cityExpenses: {
       accommodationCost: {},
       transportCost: {}
-    }
+    },
+    cityTripActivities: []
   })
 
   useEffect(() => {
@@ -124,29 +139,36 @@ const useApplicationData = () => {
       avg_transport_cost,
     }
 
+    const selectedActivities = [...state.cityTripActivities]
+
     axios.post('/city_trips', { city_trip })
       .then(result => {
         dispatch({ type: SET_CITY_TRIP, city_trip: result.data })
         return result.data
       })
+      .then(result => {
+        axios.post('/selected-activities', { selectedActivities, result })
+        return result.data
+      })
+      .then(() => {
+        dispatch({ type: SET_CITY_TRIP_ACTIVITY, cityTripActivities: [] })
+      }) 
       .then(() => {
         Promise.all([
           axios.get(`/city-trips/${state.trip.id}`),
           axios.get(`/city-redirection/${state.city[0].id}`)
         ])
         .then(result => { 
-          console.log(result)
           const cityTripIdArr = result[0].data.map(cityTripObj => {
             return cityTripObj.city_id
           })
-          console.log(cityTripIdArr)
-          console.log(state.trip.starting_city)
+
           const availableCities = result[1].data.filter(cityAroundObj => {
             if (!cityTripIdArr.includes(cityAroundObj.ending_city) && cityAroundObj.ending_city !== state.trip.starting_city) {
               return cityAroundObj
             }
           }).map(cityAroundObj => cityAroundObj.ending_city)
-          console.log(availableCities)
+
           dispatch({ type: SET_REDIRECT_ID, redirect_id: sample(availableCities) })
         })
       })
@@ -155,12 +177,48 @@ const useApplicationData = () => {
       })
   }
 
+  const nextCity = () => {
+    Promise.all([
+      axios.get(`/city-trips/${state.trip.id}`),
+      axios.get(`/city-redirection/${state.citiesInTrip.length > 0 ? state.citiesInTrip[state.citiesInTrip.length - 1].id : state.trip.starting_city}`)
+    ])
+    .then(result => { 
+      const cityTripIdArr = result[0].data.map(cityTripObj => {
+        return cityTripObj.city_id
+      })
+
+      const availableCities = result[1].data.filter(cityAroundObj => {
+        if (!cityTripIdArr.includes(cityAroundObj.ending_city) && cityAroundObj.ending_city !== state.trip.starting_city) {
+          return cityAroundObj
+        }
+      }).map(cityAroundObj => cityAroundObj.ending_city)
+      
+      dispatch({ type: SET_REDIRECT_ID, redirect_id: sample(availableCities) })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  const setCityTripActivity = (activity_id, pinned) => {
+    if (!pinned) {
+      const cityTripActivities = [ ...state.cityTripActivities, activity_id ]
+      dispatch({ type: ADD_CITY_TRIP_ACTIVITY, cityTripActivities })
+    } else {
+      const cityTripActivities = [...state.cityTripActivities]
+      const updatedcityTripActivities = cityTripActivities.filter(act => act !== activity_id)
+      dispatch({ type: REMOVE_CITY_TRIP_ACTIVITY, updatedcityTripActivities })
+    }
+  }
+
   return {
     state,
     dispatch,
     submitTrip,
     SET_CITY_DATA,
     submitCityTrip,
+    nextCity,
+    setCityTripActivity,
   };
   
 }

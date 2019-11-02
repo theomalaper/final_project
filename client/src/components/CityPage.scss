@@ -279,12 +279,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            outline: none;
           }
           img {
             height: 1.5em;
             width: 1.5em;
           }
-          .pin-icon:hover {
+          .pin-button-selected img {
             content: url('https://i.imgur.com/U6mfhaa.png');
             height: 1.5em;
             width: 1.5em;

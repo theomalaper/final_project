@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Collapse } from 'react-bootstrap';
+import ActivityPinButton from './ActivityPinButton'
 
 export default function ActivityItem(props) {
-  const { name, description, image, link_names, link_types, link_urls } = props;
+  const { activity_id, name, description, image, link_names, link_types, link_urls, setCityTripActivity } = props;
   const [open, setOpen] = useState(false);
 
   return (
     <div className="city-activity hvr-grow-list">
       <div className="activity-pin">
-        <button className="pin-button"><img className="pin-icon hvr-grow" src="https://i.imgur.com/c4FcMGP.png"/></button>
+        <ActivityPinButton url="https://i.imgur.com/c4FcMGP.png" setCityTripActivity={setCityTripActivity} activity_id={activity_id}/>
       </div>
        <div className="city-activity-description">
         <button className="activity-collapse-button" onClick={() => setOpen(!open)} aria-controls="city-activity-links" aria-expanded={open}>
