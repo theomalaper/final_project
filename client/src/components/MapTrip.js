@@ -19,7 +19,7 @@ export default function MapTrip(props) {
             key={city.id}
             lat={city.coordinate_latitude}
             lng={city.coordinate_longitude}
-            accId={city.accommodation_id}
+            accommodationId={city.accommodation_id}
           />
           )}
         </GoogleMapReact>
