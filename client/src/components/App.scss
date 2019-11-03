@@ -56,6 +56,204 @@
       height: 1.3em;
       width: 1.3em;
     }
+    .register-button {
+      outline: none;
+      width: 2em;
+      height: 2em;
+      border: none;
+      background-color: transparent;
+    }
+  }
+}
+
+
+.modal-register-button {
+  background-color: transparent;
+  border: none;
+  font-size: 0.55em;
+  outline: none;
+  font-family: 'Noto Sans', sans-serif;
+}
+.modal-register-button:focus {
+  outline: none;
+}
+.modal-register-button:hover {
+  color: rgb(118, 118, 118);
+}
+
+.modal-login-button {
+  background-color: transparent;
+  border: none;
+  font-size: 0.55em;
+  outline: none;
+  font-family: 'Noto Sans', sans-serif;
+}
+.modal-login-button:focus {
+  outline: none;
+}
+.modal-login-button:hover {
+  color: rgb(118, 118, 118);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: 'Noto Sans', sans-serif;
+  margin: 0.55em 0;
+  img {
+    width: 2.3em;
+    height: 2.3em;
+    margin: 0.5em 0;
+  }
+  h3 {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 1.2em;
+    padding: 0.5em 0.3em;
+    padding-bottom: 1em;
+  }
+  .email-login-input {
+    display: flex;
+    flex-direction: column;
+    input {
+      height: 3em;
+      width: 15em;
+      border-radius: 8px;
+      border: 1px solid grey;
+      font-size: 0.8em;
+      padding: 0 1em;
+      outline: none;
+    }
+    label {
+      font-size: 0.7em;
+    }
+  }
+  .password-login-input {
+    display: flex;
+    flex-direction: column;
+    input {
+      height: 3em;
+      width: 15em;
+      border-radius: 8px;
+      border: 1px solid grey;
+      font-size: 0.8em;
+      padding: 0 1em;
+      outline: none;
+    }
+    label {
+      font-size: 0.7em;
+    }
+  }
+  .login-submit {
+    background-color: transparent;
+    border-radius: 20px;
+    height: 2em;
+    width: 5em;
+    border: 1px solid darkgrey;
+    margin: 0.8em 0;
+    img {
+      width: 0.8em;
+      height: 0.8em;
+    }
+  }
+  .login-submit:hover {
+    color: white;
+    background-color: rgb(187, 187, 187);
+    img {
+      content: url('https://i.imgur.com/V1Sxqbh.png')
+    }
+  }
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Noto Sans', sans-serif;
+  margin: 0.3em 0;
+  img {
+    width: 2.6em;
+    height: 2.6em;
+    margin: 0.5em 0;
+  }
+  h3 {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 1.2em;
+    padding: 0.5em 0.3em;
+    padding-bottom: 1em;
+  }
+  .name-register-input {
+    display: flex;
+    align-items: center;
+    margin: 0.5em 0;
+    img {
+      width: 1.6em;
+      height: 1.6em;
+    }
+    input {
+      height: 3em;
+      width: 8em;
+      border-radius: 8px;
+      border: 1px solid grey;
+      font-size: 0.8em;
+      padding: 0 1em;
+      outline: none;
+      margin: 0 0.5em;
+    }
+  }
+  .email-register-input {
+    margin: 0.5em 0;
+    img {
+      width: 1.7em;
+      height: 1.7em;
+    }
+    input {
+      height: 3em;
+      width: 17em;
+      border-radius: 8px;
+      border: 1px solid grey;
+      font-size: 0.8em;
+      padding: 0 1em;
+      outline: none;
+      margin: 0 0.5em;
+    }
+  }
+  .password-register-input {
+    margin: 0.5em 0;
+    img {
+      width: 1.7em;
+      height: 1.7em;
+    }
+    input {
+      height: 3em;
+      width: 17em;
+      border-radius: 8px;
+      border: 1px solid grey;
+      font-size: 0.8em;
+      padding: 0 1em;
+      outline: none;
+      margin: 0 0.5em;
+    }
+  }
+  .register-submit {
+    background-color: transparent;
+    border-radius: 20px;
+    height: 2em;
+    width: 5em;
+    border: 1px solid darkgrey;
+    margin: 0.8em 0;
+    img {
+      width: 0.8em;
+      height: 0.8em;
+    }
+  }
+  .register-submit:hover {
+    color: white;
+    background-color: rgb(187, 187, 187);
+    img {
+      content: url('https://i.imgur.com/V1Sxqbh.png')
+    }
   }
 }
 
@@ -92,5 +290,4 @@
       font-family: 'Noto Sans', sans-serif;
     }
   }
-  
 }
