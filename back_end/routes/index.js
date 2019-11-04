@@ -100,11 +100,11 @@ module.exports = knex => {
 
       // Information about cities already added in the trip to add them on the map
       knex
-      .select('cities.id', 'coordinate_latitude', 'coordinate_longitude', 'city_trips.accommodation_id')
-      .from('cities')
-      .innerJoin('city_trips', 'city_id', 'cities.id')
-      .innerJoin('trips', 'trips.id', 'trip_id')
-      .where('trips.id', req.params.trip_id),
+        .select('cities.id', 'coordinate_latitude', 'coordinate_longitude', 'city_trips.accommodation_id')
+        .from('cities')
+        .innerJoin('city_trips', 'city_id', 'cities.id')
+        .innerJoin('trips', 'trips.id', 'trip_id')
+        .where('trips.id', req.params.trip_id)
       ])
     .then(data => res.json([data[0], reformatCities(data[1]), data[2]]))
     .catch(err => console.log(err));
@@ -168,7 +168,7 @@ module.exports = knex => {
   // GET City Page
   router.get('/trips/:trip_id/cities/:city_id', (req, res, next) => {
 
-    const promise = city_id => {
+    const promiseTripPage = city_id => {
       console.log(city_id)
     
       Promise.all([
@@ -210,19 +210,16 @@ module.exports = knex => {
         .catch(error => {
           console.log(error);
         });
-    }
+    };
 
-    knex.first('city_id').from('city_trips').where('trip_id', req.params.trip_id).orderBy('created_at', 'desc').then(data => {
+    knex.first('city_id').from('city_trips').where('trip_id', req.params.trip_id).orderBy('created_at', 'desc')
+    .then(data => {
       if (!data) {
-        knex.select('starting_city AS city_id').from('trips').where('trips.id', req.params.trip_id).then(data => promise(data[0])).catch(err => console.log(err))
+        knex.select('starting_city AS city_id').from('trips').where('trips.id', req.params.trip_id).then(data => promiseTripPage(data[0])).catch(err => console.log(err))
       } else {
-        promise(data)
+        promiseTripPage(data)
       }
     })
-
-    // Making a first promise to fetch the IDs needed for the request to the transport api, then we do all the other requests with the
-    // knex.select('starting_city').from('trips').where('trips.id', req.params.trip_id).then(
-    // })
     .catch(err => console.log(err));
   });
 
@@ -254,7 +251,7 @@ module.exports = knex => {
         res.json(result)
       })
       .catch(err => console.log(err));
-  })
+  });
 
   router.get('/city-trips/:trip_id', (req, res, next) => {
     knex.select('city_id')
@@ -264,15 +261,15 @@ module.exports = knex => {
         res.json(result)
       })
       .catch(err => console.log(err));
-  })
-
+  });
+  
   router.post('/selected-activities', (req, res, next) => {
     const activitiesToInsert = req.body.selectedActivities.map(activity_id => {
       return {
         activity_id,
         city_trip_id: req.body.result.id
       }
-    })
+    });
 
     knex('selected_activities')
       .insert(activitiesToInsert)
