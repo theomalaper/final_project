@@ -58,8 +58,8 @@ module.exports = knex => {
           email: req.body.email,
           password: hashedPassword,
         })
-        .returning("*")
-      res.send({ user: user[0].id })
+        .returning(["first_name", "last_name", "email"])
+      res.send(user)
     } catch (err) {
       res.status(400).send(err)
     }
@@ -98,8 +98,18 @@ module.exports = knex => {
     }
   })
 
-  router.get('/', verify, (req, res) => {
-    res.send(req.user)
+  router.get('/profile', verify, (req, res) => {
+    knex
+      .select('*')
+      .from('users')
+      .where('users.id', req.user._id)
+      .join('trips', 'user_id', 'users.id')
+    .then(result => {
+      res.json(result)
+    })
+    .catch(err => {
+      res.status(400).send(err)
+    })
   })
   return router;
 };
