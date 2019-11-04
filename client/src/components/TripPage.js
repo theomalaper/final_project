@@ -25,6 +25,9 @@ export default function TripPage(props) {
     const totalCost = citiesInfo.reduce(((total, city) => 
       total + city.accommodation_cost * city.days + city.transport_cost + city.avg_daily_expense * city.days
     ),0);
+    const startDate = new Date(tripInfo[0].start_date);
+    const endDate = new Date(tripInfo[0].start_date);
+    endDate.setDate(endDate.getDate() + +tripInfo[0].total_days); 
 
     return (
       <Fragment>
@@ -37,7 +40,7 @@ export default function TripPage(props) {
           <h3 className="summary-title">Summary</h3>
           <ListGroup variant="flush">
             <ListGroup.Item className="content">Cities explored: {tripInfo[0].cities_count}</ListGroup.Item>
-            <ListGroup.Item className="content">Duration: {tripInfo[0].total_days} days</ListGroup.Item>
+            <ListGroup.Item className="content">Duration: {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}, {tripInfo[0].total_days} days</ListGroup.Item>
             <ListGroup.Item className="content">Cost: ${totalCost}</ListGroup.Item>
           </ListGroup>
         </section>
