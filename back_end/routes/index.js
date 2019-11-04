@@ -1,6 +1,7 @@
 const request = require('request-promise-native');
 const express = require('express');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 
 // Helper function that loops over each activity and adds its activity_links to it as each activity has 2 link and is being duplicated in the res.json
 const reformatActivities = activities => {
@@ -278,6 +279,30 @@ module.exports = knex => {
         res.json(result[0])
       })
       .catch(err => console.log(err));
+  });
+
+  router.post('/send', function(req, res, next) {
+    console.log('Sending the email...')
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'julien.atanassian@gmail.com',
+        pass: process.env.REACT_APP_MAIL_PWD
+      }
+    });
+    const mailOptions = {
+      from: `julien.atanassian@gmail.com`,
+      to: 'jatanassian@hotmail.fr',
+      subject: `Your trip`,
+      html: req.body.message
+    };
+    transporter.sendMail(mailOptions, function(err, res) {
+      if (err) {
+        console.error('there was an error: ', err);
+      } else {
+        console.log('here is the res: ', res)
+      }
+    });
   });
 
   return router
