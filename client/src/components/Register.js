@@ -1,6 +1,12 @@
 import React from "react"
 
-export default function Register() {
+export default function Register(props) {
+  const submitUser = (event, ) => {
+      event.preventDefault()
+      props.registerUser(props.firstName, props.lastName, props.email, props.password)
+      props.setModalShow(false)
+  }
+
   return (
   <form className="register-form">
     <img src="https://image.flaticon.com/icons/svg/2170/2170091.svg" alt="Register picture"/>
@@ -12,15 +18,15 @@ export default function Register() {
         name='first_name'
         type='text'
         placeholder='First Name'
-        // value={this.state.username}
-        // onChange={this.handleChange}
+        value={props.firstName}
+        onChange={event => props.setFirstName(event.target.value)}
       />
       <input
         name='last_name'
         type='text'
         placeholder='Last Name'
-        // value={this.state.username}
-        // onChange={this.handleChange}
+        value={props.lastName}
+        onChange={event => props.setLastName(event.target.value)}
       />
     </div>
 
@@ -30,8 +36,8 @@ export default function Register() {
         name='last_name'
         type='email'
         placeholder='123@gmail.com'
-        // value={this.state.username}
-        // onChange={this.handleChange}
+        value={props.email}
+        onChange={event => props.setEmail(event.target.value)}
       />
     </div>
 
@@ -41,12 +47,12 @@ export default function Register() {
         type='password'
         name='password'
         placeholder='Password'
-        // value={this.state.password}
-        // onChange={this.handleChange}
+        value={props.password}
+        onChange={event => props.setPassword(event.target.value)}
       /><br/>
     </div>
 
-    <button className="register-submit" type='submit'><img src="https://i.imgur.com/14zb1XA.png" alt="Register Submit"/></button>
+    <button className="register-submit" onClick={event => submitUser(event)} type='submit'><img src="https://i.imgur.com/14zb1XA.png" alt="Register Submit"/></button>
   </form>
   );
 }

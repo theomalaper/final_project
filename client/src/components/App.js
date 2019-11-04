@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import './App.scss';
 import './Homepage.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Button } from 'react-bootstrap';
-import Register from './Register'
-import Login from './Login'
+import MyVerticallyCenteredModal from './Modal'
 
 import {
   BrowserRouter as Router,
@@ -21,43 +19,14 @@ import useApplicationData from '../hooks/useApplicationData';
 const LOGIN = 'LOGIN'
 const REGISTER = 'REGISTER'
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <div className="register-login-modal">
-       <Modal
-      {...props}
-      centered
-      centereddialogClassName="modal-50w"
-      aria-labelledby="example-custom-modal-styling-title"
-      >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          <button className="modal-register-button" onClick={() => props.setShow(REGISTER)}>REGISTER</button>
-          /
-          <button className="modal-login-button" onClick={() => props.setShow(LOGIN)}>LOGIN</button>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div>
-        {props.anotherShow === REGISTER && (
-          <Register />
-        )}
-        {props.anotherShow === LOGIN && (
-          <Login />
-        )}
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-      </Modal.Footer>
-    </Modal>
-  </div>
-  );
-}
-
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
-  const [show, setShow] = useState(REGISTER)
-  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity, setCityTripActivity, SET_TRIP_DATA, finalizeTrip } = useApplicationData()
+  const [show, setShow] = useState(REGISTER);
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity, setCityTripActivity, SET_TRIP_DATA, finalizeTrip, registerUser } = useApplicationData()
 
   return (
     <Router>
@@ -81,11 +50,20 @@ export default function App() {
         </header>
 
         <MyVerticallyCenteredModal
+          setModalShow={setModalShow}
           show={modalShow}
           onHide={() => setModalShow(false)}
           anotherShow={show}
           setShow={setShow}
-
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          registerUser={registerUser}
         />
 
         <Switch>

@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import { sample } from 'lodash'
 
-const SET_USERS = 'SET_USERS';
+const SET_USER = 'SET_USER';
 const SET_TRIP = 'SET_TRIP';
 const SET_CITY_DATA = 'SET_CITY_DATA';
 const SET_HOMEPAGE_DATA = 'SET_HOMEPAGE_DATA';
@@ -15,9 +15,9 @@ const SET_TRIP_DATA = 'SET_TRIP_DATA';
 
 const reducer = (state, action) => {
   const actions = {
-    SET_USERS: {
+    SET_USER: {
       ...state,
-      users: action.users,
+      user: action.user,
     },
     SET_TRIP: {
       ...state,
@@ -80,6 +80,7 @@ const reducer = (state, action) => {
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
+    user: {},
     trip: {},
     cityExpenses: {
       accommodationCost: {},
@@ -224,6 +225,12 @@ const useApplicationData = () => {
       })
   }
 
+  const registerUser = (first_name, last_name, email, password) => {
+    axios.post('/auth/register', { first_name, last_name, email, password })
+      .then(result => {
+        dispatch({ type: SET_USER, user: result.data[0]})
+      })
+  }
   return {
     state,
     dispatch,
@@ -234,6 +241,7 @@ const useApplicationData = () => {
     setCityTripActivity,
     SET_TRIP_DATA,
     finalizeTrip,
+    registerUser,
   }
 }
 
