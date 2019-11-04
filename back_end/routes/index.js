@@ -1,6 +1,7 @@
 const request = require('request-promise-native');
 const express = require('express');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 
 // Helper function that loops over each activity and adds its activity_links to it as each activity has 2 link and is being duplicated in the res.json
 const reformatActivities = activities => {
@@ -100,11 +101,11 @@ module.exports = knex => {
 
       // Information about cities already added in the trip to add them on the map
       knex
-      .select('cities.id', 'coordinate_latitude', 'coordinate_longitude', 'city_trips.accommodation_id')
-      .from('cities')
-      .innerJoin('city_trips', 'city_id', 'cities.id')
-      .innerJoin('trips', 'trips.id', 'trip_id')
-      .where('trips.id', req.params.trip_id),
+        .select('cities.id', 'coordinate_latitude', 'coordinate_longitude', 'city_trips.accommodation_id')
+        .from('cities')
+        .innerJoin('city_trips', 'city_id', 'cities.id')
+        .innerJoin('trips', 'trips.id', 'trip_id')
+        .where('trips.id', req.params.trip_id)
       ])
     .then(data => res.json([data[0], reformatCities(data[1]), data[2]]))
     .catch(err => console.log(err));
@@ -168,7 +169,7 @@ module.exports = knex => {
   // GET City Page
   router.get('/trips/:trip_id/cities/:city_id', (req, res, next) => {
 
-    const promise = city_id => {
+    const promiseTripPage = city_id => {
       console.log(city_id)
     
       Promise.all([
@@ -210,19 +211,16 @@ module.exports = knex => {
         .catch(error => {
           console.log(error);
         });
-    }
+    };
 
-    knex.first('city_id').from('city_trips').where('trip_id', req.params.trip_id).orderBy('created_at', 'desc').then(data => {
+    knex.first('city_id').from('city_trips').where('trip_id', req.params.trip_id).orderBy('created_at', 'desc')
+    .then(data => {
       if (!data) {
-        knex.select('starting_city AS city_id').from('trips').where('trips.id', req.params.trip_id).then(data => promise(data[0])).catch(err => console.log(err))
+        knex.select('starting_city AS city_id').from('trips').where('trips.id', req.params.trip_id).then(data => promiseTripPage(data[0])).catch(err => console.log(err))
       } else {
-        promise(data)
+        promiseTripPage(data)
       }
     })
-
-    // Making a first promise to fetch the IDs needed for the request to the transport api, then we do all the other requests with the
-    // knex.select('starting_city').from('trips').where('trips.id', req.params.trip_id).then(
-    // })
     .catch(err => console.log(err));
   });
 
@@ -254,7 +252,7 @@ module.exports = knex => {
         res.json(result)
       })
       .catch(err => console.log(err));
-  })
+  });
 
   router.get('/city-trips/:trip_id', (req, res, next) => {
     knex.select('city_id')
@@ -264,15 +262,15 @@ module.exports = knex => {
         res.json(result)
       })
       .catch(err => console.log(err));
-  })
-
+  });
+  
   router.post('/selected-activities', (req, res, next) => {
     const activitiesToInsert = req.body.selectedActivities.map(activity_id => {
       return {
         activity_id,
         city_trip_id: req.body.result.id
       }
-    })
+    });
 
     knex('selected_activities')
       .insert(activitiesToInsert)
@@ -281,6 +279,30 @@ module.exports = knex => {
         res.json(result[0])
       })
       .catch(err => console.log(err));
+  });
+
+  router.post('/send', function(req, res, next) {
+    console.log('Sending the email...')
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'julien.atanassian@gmail.com',
+        pass: process.env.REACT_APP_MAIL_PWD
+      }
+    });
+    const mailOptions = {
+      from: `julien.atanassian@gmail.com`,
+      to: 'jatanassian@hotmail.fr',
+      subject: `Your trip`,
+      html: req.body.message
+    };
+    transporter.sendMail(mailOptions, function(err, res) {
+      if (err) {
+        console.error('there was an error: ', err);
+      } else {
+        console.log('here is the res: ', res)
+      }
+    });
   });
 
   return router
