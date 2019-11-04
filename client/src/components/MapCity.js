@@ -23,6 +23,7 @@ export default function MapCity(props) {
             key={city.id}
             lat={city.coordinate_latitude}
             lng={city.coordinate_longitude}
+            accommodationId={city.accommodation_id}
           />
           )}
         </GoogleMapReact>
