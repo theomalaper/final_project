@@ -69,12 +69,13 @@ const reducer = (state, action) => {
     SET_TRIP_DATA: {
       ...state,
       tripInfo: action.tripInfo,
-      citiesInfo: action.citiesInfo
+      citiesInfo: action.citiesInfo,
+      allCities: action.allCities
     },
     SET_PROFILE_DATA: {
       ...state,
       profileInfo: action.profileInfo
-    }
+    },
   };
 
   if (!actions[action.type]) {
