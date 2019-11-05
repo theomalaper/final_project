@@ -9,7 +9,7 @@ export default function CityListItem(props) {
           <p>{props.country}</p>
         </div>
       </div>
-      <img className="hvr-grow" src={props.city_image} alt={props.name}/>
+      <img className="hvr-grow-photo" src={props.city_image} alt={props.name}/>
     </a>
   )
 }

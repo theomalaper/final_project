@@ -1,6 +1,12 @@
 import React from "react"
 
-export default function Login() {
+export default function Login(props) {
+  const submitUser = event => {
+    event.preventDefault()
+    props.loginUser(props.email, props.password)
+    props.setModalShow(false)
+  }
+
   return (
 <form className="login-form">
     <img src="https://image.flaticon.com/icons/svg/1000/1000946.svg" alt="Login picture"/>
@@ -12,8 +18,8 @@ export default function Login() {
         name='last_name'
         type='email'
         placeholder='123@gmail.com'
-        // value={this.state.username}
-        // onChange={this.handleChange}
+        value={props.email}
+        onChange={event => props.setEmail(event.target.value)}
       /><br/>
     </div>
 
@@ -23,12 +29,12 @@ export default function Login() {
         type='password'
         name='password'
         placeholder='Password'
-        // value={this.state.password}
-        // onChange={this.handleChange}
+        value={props.password}
+        onChange={event => props.setPassword(event.target.value)}
       /><br/>
     </div>
 
-    <button className="login-submit" type='submit'><img src="https://i.imgur.com/14zb1XA.png" alt="Login Submit"/></button>
+    <button className="login-submit" onClick={event => submitUser(event)} type='submit'><img src="https://i.imgur.com/14zb1XA.png" alt="Login Submit"/></button>
   </form>
   );
 }

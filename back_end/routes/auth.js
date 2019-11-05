@@ -59,7 +59,17 @@ module.exports = knex => {
           password: hashedPassword,
         })
         .returning("*")
-      res.send({ user: user[0].id })
+
+      const token = jwt.sign({_id: user[0].id}, process.env.TOKEN_SECRET)
+
+      res.send({
+        user: {
+          first_name: user[0].first_name,
+          last_name: user[0].last_name,
+          email: user[0].email
+        },
+        jwt: token
+      })
     } catch (err) {
       res.status(400).send(err)
     }
@@ -92,14 +102,59 @@ module.exports = knex => {
 
     //Returns token
     try {
-      res.header('auth-token', token).send(token)
+      res.send({
+        user: {
+          first_name: user[0].first_name,
+          last_name: user[0].last_name,
+          email: user[0].email
+        },
+        jwt: token
+      })
     } catch (err) {
       res.status(400).send(err)
     }
   })
 
-  router.get('/', verify, (req, res) => {
-    res.send(req.user)
+  router.get('/profile', verify, (req, res) => {
+
+    Promise.all([
+      knex
+        .select('first_name', 'last_name', 'email')
+        .from('users')
+        .where('id', req.user._id),
+
+      knex
+        .select( 'trips.id', 'trips.name', 'trips.budget', 'cities.name as starting_city_name', 'trips.start_date', 'trips.traveller_nb', 'trips.travel_type', 'zones.name as zone_name')
+        .from('trips')
+        .innerJoin('cities', 'cities.id', 'trips.starting_city')
+        .innerJoin('zones', 'zones.id', 'trips.zone_id')
+        .where('trips.isPlanning', false)
+        .andWhere('trips.user_id', req.user._id),
+
+      knex
+        .select('trips.name as trip_name', 'cities.id', 'cities.name', 'cities.description', 'cities.city_image', 'cities.country')
+        .from('cities')
+        .innerJoin('city_trips', 'cities.id', 'city_trips.city_id')
+        .innerJoin('trips', 'trips.id', 'city_trips.trip_id')
+        .where('trips.user_id', req.user._id),
+
+      knex
+        .select('activities.id', 'activities.name', 'activities.description', 'activities.activity_image', 'cities.name as city_name', 'cities.country', 'trips.name as trip_name', 'activity_links.name as link_name', 'activity_links.url')
+        .from('selected_activities')
+        .innerJoin('activities', 'selected_activities.activity_id', 'activities.id')
+        .innerJoin('cities', 'cities.id', 'activities.city_id')
+        .innerJoin('activity_links', 'activities.id', 'activity_links.activity_id')
+        .innerJoin('city_trips', 'selected_activities.city_trip_id', 'city_trips.id')
+        .innerJoin('trips', 'trips.id', 'city_trips.trip_id')
+        .where('trips.user_id', req.user._id)
+        .andWhere('activity_links.type', 'guide')
+    ])
+    .then(result => {
+       res.json(result)
+    })
+    .catch(err => {
+      res.status(400).send(err)
+    })
   })
   return router;
 };

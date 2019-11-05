@@ -223,7 +223,7 @@ input[type=date]::-webkit-outer-spin-button {
    opacity: 1;
 }
 
-.hvr-grow {
+.hvr-grow-photo {
   display: inline-block;
   vertical-align: middle;
   transform: translateZ(0);
@@ -234,10 +234,10 @@ input[type=date]::-webkit-outer-spin-button {
   transition-property: transform;
 }
 
-.hvr-grow:hover,
-.hvr-grow:focus,
-.hvr-grow:active {
-  transform: scale(1.1);
+.hvr-grow-photo:hover,
+.hvr-grow-photo:focus,
+.hvr-grow-photo:active {
+  transform: scale(1.06);
 }
 
 .hvr-float {

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import './App.scss';
 import './Homepage.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Button } from 'react-bootstrap';
-import Register from './Register'
-import Login from './Login'
+import MyVerticallyCenteredModal from './Modal'
 
 import {
   BrowserRouter as Router,
@@ -21,43 +19,14 @@ import useApplicationData from '../hooks/useApplicationData';
 const LOGIN = 'LOGIN'
 const REGISTER = 'REGISTER'
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <div className="register-login-modal">
-       <Modal
-      {...props}
-      centered
-      centereddialogClassName="modal-50w"
-      aria-labelledby="example-custom-modal-styling-title"
-      >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          <button className="modal-register-button" onClick={() => props.setShow(REGISTER)}>REGISTER</button>
-          /
-          <button className="modal-login-button" onClick={() => props.setShow(LOGIN)}>LOGIN</button>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div>
-        {props.anotherShow === REGISTER && (
-          <Register />
-        )}
-        {props.anotherShow === LOGIN && (
-          <Login />
-        )}
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-      </Modal.Footer>
-    </Modal>
-  </div>
-  );
-}
-
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
-  const [show, setShow] = useState(REGISTER)
-  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity, setCityTripActivity, SET_TRIP_DATA, finalizeTrip } = useApplicationData()
+  const [show, setShow] = useState(REGISTER);
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const { state, submitTrip, dispatch, SET_CITY_DATA, submitCityTrip, nextCity, setCityTripActivity, SET_TRIP_DATA, finalizeTrip, registerUser, loginUser, logoutUser, SET_PROFILE_DATA } = useApplicationData()
 
   return (
     <Router>
@@ -70,27 +39,49 @@ export default function App() {
             </div>
             <Link className="react-links" to="/"><img src="https://i.imgur.com/DsFXPIu.png" alt="Home Page"/></Link>
             <Link className="react-links" to="/cities/1"><img src="https://i.imgur.com/4aIHNB5.png" alt="City Page"/></Link>
-            <Link className="react-links" to="/users/1"><img src="https://i.imgur.com/qOq1S2B.png" alt="User Page"/></Link>
             <Link className="react-links" to="/trips/1"><img src="https://i.imgur.com/pqlACvW.png" alt="Trip Page"/></Link>
           </div>
           <div className="header-links">
-            <img src="https://i.imgur.com/vaXmVM1.png" alt="Plus Icon"/>
-            <img src="https://i.imgur.com/Ib4nPvi.png" alt="Bottom Icon"/>
-            <button className="register-button" onClick={() => setModalShow(true)}><img src="https://image.flaticon.com/icons/svg/273/273581.svg" className="profile-icon" alt="Profile icon"/></button>
+            {localStorage.getItem('token') && (
+              <Fragment>
+                <Link className="react-links" to="/"><img src="https://i.imgur.com/vaXmVM1.png" alt="Plus Icon"/></Link>
+                <button className="logout-button" onClick={() => logoutUser()}><img src="https://i.imgur.com/Ib4nPvi.png" alt="Logout Icon"/></button>
+                <Link className="react-links" to="/users"><img src="https://image.flaticon.com/icons/svg/273/273581.svg" className="profile-icon" alt="Profile icon"/></Link>
+              </Fragment>
+            )}
+            {!localStorage.getItem('token') && (
+              <Fragment>
+                <button className="register-button" onClick={() => setModalShow(true)}><img src="https://i.imgur.com/qOq1S2B.png" className="profile-icon" alt="Profile icon"/></button>
+              </Fragment>
+            )}
           </div>
         </header>
 
         <MyVerticallyCenteredModal
+          setModalShow={setModalShow}
           show={modalShow}
           onHide={() => setModalShow(false)}
           anotherShow={show}
           setShow={setShow}
-
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          registerUser={registerUser}
+          loginUser={loginUser}
         />
 
         <Switch>
-          <Route exact path="/users/:id">
-            <UserPage />
+          <Route exact path="/users">
+            <UserPage 
+              SET_PROFILE_DATA={SET_PROFILE_DATA}
+              dispatch={dispatch}
+              profileInfo={state.profileInfo}
+            />
           </Route>
           <Route path="/cities/:id">
             <CityPage 

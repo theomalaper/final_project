@@ -83,7 +83,7 @@ export default function TripForm(props) {
               type="date"
               name="start_date"
               placeholder="Start date"
-              value={startDate}
+              value={startDate || new Date().toISOString().substr(0, 10)}
               onChange={event => setStartDate(event.target.value)}
             />
         </div>
