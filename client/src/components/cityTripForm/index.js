@@ -7,7 +7,6 @@ import useVisualMode from '../../hooks/useVisualMode'
 
 const SHOW = 'SHOW'
 const FORM = 'FORM'
-const CONFIRM = 'CONFIRM'
 const FINALIZE ='FINALIZE'
 
 export default function CityTripForm(props) {

@@ -1,47 +1,59 @@
-import React from 'react';
-import {
-  useParams
-} from "react-router-dom";
+import React, { useEffect } from 'react';
 import './UserPage.scss'
+import axios from 'axios';
+import useVisualMode from '../hooks/useVisualMode'
+import Overview from './userPageLayout/Overview'
+import Trips from './userPageLayout/Trips'
+import Cities from './userPageLayout/Cities'
+import Activities from './userPageLayout/Activities'
 
-export default function CityPage() {
-  const { id } = useParams();
+const OVERVIEW = 'OVERVIEW'
+const TRIPS = 'TRIPS'
+const CITIES = 'CITIES'
+const ACTIVITIES = 'ACTIVITIES'
+
+export default function CityPage({ dispatch, SET_PROFILE_DATA, profileInfo }) {
+  const token = localStorage.getItem('token')
+  const { mode, transition } = useVisualMode(OVERVIEW)
+
+  useEffect(() => { 
+    axios.get('/auth/profile', { headers: { "auth-token": `${token}` }})
+      .then(result => {
+        dispatch({ type: SET_PROFILE_DATA, profileInfo: { user: result.data[0], trips: result.data[1], cities: result.data[2], activities: result.data[3] }})
+      })
+      .catch(err => console.log(err))
+  }, []);
 
   return (
     <div>
       <header className="profile-header">
         <div className="header-user-info">
           <img className="profile-icon" src="https://image.flaticon.com/icons/svg/273/273581.svg" alt="profile-icon"/>
-          <h3>Bob Dylan</h3>
-          <p>USER</p>
+          <h3>{profileInfo ? profileInfo.user[0].first_name : null}  {profileInfo ? profileInfo.user[0].last_name : null}</h3>
+          <p>{profileInfo ? profileInfo.user[0].email : null}</p>
         </div>
         <div className="header-overlay"></div>
         <img className='background-image' src="https://i.imgur.com/YjgkdT1.jpg" alt="User page background"/>
       </header>
       <section className="user-page-subnav">
-        <p className="hvr-grow">OVERVIEW</p>
-        <p className="hvr-grow">TRIP INFO</p>
-        <p className="hvr-grow">ABOUT</p>
+        <button onClick={() => transition(OVERVIEW)}><p className="hvr-grow">OVERVIEW</p></button>
+        <button onClick={() => transition(TRIPS)}><p className="hvr-grow">TRIPS INFO</p></button>
+        <button onClick={() => transition(CITIES)}><p className="hvr-grow">CITIES VISITED</p></button>
+        <button onClick={() => transition(ACTIVITIES)}><p className="hvr-grow">EXPERIENCES</p></button>
         <p className="hvr-grow">MORE</p>
       </section>
-      <section className="trip-container">
-        <h4>Browse Trips</h4>
-        <div className="trip-info">
-          <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-          <img src="https://images.unsplash.com/photo-1533419784160-1f7f79022119?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1646&q=80"/>
-          <img src="https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-          <img src="https://images.unsplash.com/photo-1459679749680-18eb1eb37418?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-        </div>
-      </section>
-      <section className="activity-container">
-        <h4>Browse Pinned Experiences</h4>
-        <div className="activity-info">
-          <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-          <img src="https://images.unsplash.com/photo-1533419784160-1f7f79022119?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1646&q=80"/>
-          <img src="https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-          <img src="https://images.unsplash.com/photo-1459679749680-18eb1eb37418?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"/>
-        </div>
-      </section>
+        { mode === OVERVIEW && (
+          <Overview profileInfo={profileInfo}/>
+        )}
+         { mode === TRIPS && (
+          <Trips profileInfo={profileInfo}/>
+        )}
+         { mode === CITIES && (
+           <Cities profileInfo={profileInfo}/>
+        )}
+         { mode === ACTIVITIES && (
+          <Activities profileInfo={profileInfo}/>
+        )}
     </div>
   );
 };

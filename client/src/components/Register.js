@@ -1,7 +1,7 @@
 import React from "react"
 
 export default function Register(props) {
-  const submitUser = (event, ) => {
+  const submitUser = event => {
       event.preventDefault()
       props.registerUser(props.firstName, props.lastName, props.email, props.password)
       props.setModalShow(false)

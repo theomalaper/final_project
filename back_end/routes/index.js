@@ -1,6 +1,7 @@
 const request = require('request-promise-native');
 const express = require('express');
 const router = express.Router();
+const verify = require('./verifyToken')
 
 // Helper function that loops over each activity and adds its activity_links to it as each activity has 2 link and is being duplicated in the res.json
 const reformatActivities = activities => {
@@ -103,7 +104,7 @@ module.exports = knex => {
   });
 
   // POST Trip Page when submitting homepage's form
-  router.post('/trips', (req, res, next) => {
+  router.post('/trips', verify, (req, res, next) => {
     knex('trips')
       .insert({
         isPlanning: true,
@@ -113,7 +114,7 @@ module.exports = knex => {
         starting_city: knex.select('id').from('cities').where('name', req.body.trip.startingCity),
         start_date: req.body.trip.startDate,
         zone_id: req.body.trip.zone,
-        user_id: 1
+        user_id: req.user._id
       })
       .returning("*")
       .then((result) => {

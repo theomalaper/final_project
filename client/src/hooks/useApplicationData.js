@@ -12,6 +12,7 @@ const ADD_CITY_TRIP_ACTIVITY = 'ADD_CITY_TRIP_ACTIVITY'
 const REMOVE_CITY_TRIP_ACTIVITY = 'REMOVE_CITY_TRIP_ACTIVITY'
 const SET_CITY_TRIP_ACTIVITY = 'SET_CITY_TRIP_ACTIVITY'
 const SET_TRIP_DATA = 'SET_TRIP_DATA';
+const SET_PROFILE_DATA = 'SET_PROFILE_DATA'
 
 const reducer = (state, action) => {
   const actions = {
@@ -69,6 +70,10 @@ const reducer = (state, action) => {
       ...state,
       tripInfo: action.tripInfo,
       citiesInfo: action.citiesInfo
+    },
+    SET_PROFILE_DATA: {
+      ...state,
+      profileInfo: action.profileInfo
     }
   };
 
@@ -86,8 +91,10 @@ const useApplicationData = () => {
       accommodationCost: {},
       transportCost: {}
     },
-    cityTripActivities: []
+    cityTripActivities: [],
   })
+
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     axios.get('/homepage')
@@ -107,8 +114,8 @@ const useApplicationData = () => {
       startDate,
       zone
     }
-
-    axios.post(`/trips`, { trip })
+    
+    axios.post(`/trips`, { trip }, { headers: { "auth-token": `${token}`}})
       .then(result => {
         dispatch({ type: SET_TRIP, trip: result.data})
         return result.data
@@ -143,7 +150,7 @@ const useApplicationData = () => {
 
     const selectedActivities = [...state.cityTripActivities]
 
-    axios.post('/city_trips', { city_trip })
+    axios.post('/city_trips', { city_trip } )
       .then(result => {
         dispatch({ type: SET_CITY_TRIP, city_trip: result.data })
         return result.data
@@ -228,9 +235,24 @@ const useApplicationData = () => {
   const registerUser = (first_name, last_name, email, password) => {
     axios.post('/auth/register', { first_name, last_name, email, password })
       .then(result => {
-        dispatch({ type: SET_USER, user: result.data[0]})
+        localStorage.setItem("token", result.data.jwt)
+        dispatch({ type: SET_USER, user: result.data.user})
       })
   }
+
+  const loginUser = (email, password) => {
+    axios.post('/auth/login', { email, password })
+      .then(result => {
+        localStorage.setItem("token", result.data.jwt)
+        dispatch({ type: SET_USER, user: result.data.user})
+      })
+  }
+
+  const logoutUser = () => {
+    localStorage.removeItem("token")
+    dispatch({ type: SET_USER, user: {} })
+  }
+
   return {
     state,
     dispatch,
@@ -242,6 +264,9 @@ const useApplicationData = () => {
     SET_TRIP_DATA,
     finalizeTrip,
     registerUser,
+    loginUser,
+    logoutUser,
+    SET_PROFILE_DATA
   }
 }
 

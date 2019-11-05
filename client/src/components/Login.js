@@ -1,6 +1,12 @@
 import React from "react"
 
 export default function Login(props) {
+  const submitUser = event => {
+    event.preventDefault()
+    props.loginUser(props.email, props.password)
+    props.setModalShow(false)
+  }
+
   return (
 <form className="login-form">
     <img src="https://image.flaticon.com/icons/svg/1000/1000946.svg" alt="Login picture"/>
@@ -28,7 +34,7 @@ export default function Login(props) {
       /><br/>
     </div>
 
-    <button className="login-submit" type='submit'><img src="https://i.imgur.com/14zb1XA.png" alt="Login Submit"/></button>
+    <button className="login-submit" onClick={event => submitUser(event)} type='submit'><img src="https://i.imgur.com/14zb1XA.png" alt="Login Submit"/></button>
   </form>
   );
 }

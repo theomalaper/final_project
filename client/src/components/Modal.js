@@ -52,6 +52,8 @@ export default function MyVerticallyCenteredModal(props) {
             setEmail={props.setEmail}
             password={props.password}
             setPassword={props.setPassword}
+            loginUser={props.loginUser}
+            setModalShow={props.setModalShow}
           />
         )}
         </div>
