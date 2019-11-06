@@ -92,18 +92,77 @@ export default function TripPage(props) {
       <Fragment>
         <header className="map">
           <MapTrip allCities={allCities} latitude={tripInfo[0].coordinate_latitude} longitude={tripInfo[0].coordinate_longitude} zoom={tripInfo[0].zoom}/>
+          <div className="trip-title">
+            <h3>{tripInfo[0].name}</h3>
+            <p>{tripInfo[0].zone} - {tripInfo[0].travel_type}</p>
+          </div>
         </header>
-        <h1 className="trip-title">{tripInfo[0].name}</h1>
-        <TripCityList citiesInfo={citiesInfo}/>
-        <section className="block">
-          <h3 className="summary-title">Summary</h3>
-          <ListGroup variant="flush">
-            <ListGroup.Item className="content">Cities explored: {tripInfo[0].cities_count}</ListGroup.Item>
-            <ListGroup.Item className="content">Duration: {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}, {tripInfo[0].total_days} days</ListGroup.Item>
-            <ListGroup.Item className="content">Estimated cost: ${totalCost}</ListGroup.Item>
-          </ListGroup>
+        <section className="trip-page-subnav">
+          <p className="hvr-grow-trip">OVERVIEW</p>
+          <p className="hvr-grow-trip">TRIP INFO</p>
+          <p className="hvr-grow-trip">ABOUT</p>
+          <p className="hvr-grow-trip">MORE</p>
         </section>
-        <button type="button" onClick={sendEmail}>Send by email</button>
+        <div className="trip-container">
+          <h3 className="trip-container-title">Browse Trip Destination</h3>
+          <TripCityList classnNAme="city-list" citiesInfo={citiesInfo}/>
+        </div>
+        <section className="trip-page-footer">
+          <h3 className="summary-title">Summary</h3>
+          <div className="summary">
+            <div className="summary-info">
+              <div className="info info-trip">
+                <p>TRIP SUMMARY FOR - {tripInfo[0].name}</p>
+              </div>
+              <div className="info info-duration">
+                <div className="info-img">
+                  <img src="https://image.flaticon.com/icons/svg/2237/2237689.svg"/>
+                </div>
+                <div className="info-content">
+                  <p className="info-title">DURATION - {tripInfo[0].total_days} DAYS</p>
+                  <p>{startDate.toLocaleDateString()} <img className="dot-img" src="https://i.imgur.com/lagzwok.png"/><img className="line" src="https://i.imgur.com/qKcPVBY.png"/><img className="dot-img"src="https://i.imgur.com/lagzwok.png"/> {endDate.toLocaleDateString()}</p>
+                </div>
+              </div>
+              <div className="info">
+                <div className="info-img">
+                  <img src="https://image.flaticon.com/icons/svg/2240/2240951.svg"/>
+                </div>
+                <div className="info-content">
+                  <p className="info-title">CITIES</p>
+                  <p>{tripInfo[0].cities_count} Explored</p>
+                </div>
+              </div>
+              <div className="info">
+                <div className="info-img">
+                  <img src="https://image.flaticon.com/icons/svg/2240/2240614.svg"/>
+                </div>
+                <div className="info-content">
+                  <p className="info-title">COUNTRIES</p>
+                  <p>3 Visited</p>
+                </div>
+              </div>
+              <div className="info">
+                <div className="info-img">
+                  <img src="https://image.flaticon.com/icons/svg/2166/2166951.svg"/>
+                </div>
+                <div className="info-content">
+                  <p className="info-title">TOTAL ESTIMATED COST</p>
+                  <p>${totalCost}</p>
+                </div>
+              </div>
+              <div className="info">
+                <div className="info-img">
+                  <img src="https://image.flaticon.com/icons/svg/1471/1471985.svg"/>
+                </div>
+                <div className="info-content">
+                  <p className="info-title">EXPERIENCES</p>
+                  <p>6 new ones</p>
+                </div>
+              </div>
+            </div>
+            <button className="email-button" type="button" onClick={sendEmail}><img src="https://image.flaticon.com/icons/svg/2188/2188947.svg"/><p>EMAIL PLANNING</p></button>
+          </div>
+        </section>
       </Fragment>
     );
   } else {

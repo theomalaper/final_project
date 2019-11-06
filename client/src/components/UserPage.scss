@@ -59,8 +59,20 @@
     border: none;
     outline:none;
   }
-  button:focus p {
+  button:after {
+    content: "";
+    display: block;
+    width: 0% ;
+    margin: 0 auto;
     border-bottom: 1px solid rgb(0, 0, 58);
+  }
+  button:focus::after {
+    content: "";
+    display: block;
+    width: 40% ;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(0, 0, 58);
+    transition: all .1s ease-in;
   }
 }
 
@@ -278,6 +290,8 @@
       }
     }
     .city-bottom {
+      display: flex;
+      flex-direction: column; 
       padding: 1em 2em;
       p {
         font-size: 0.85em;

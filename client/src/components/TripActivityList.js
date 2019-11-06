@@ -17,7 +17,9 @@ export default function TripActivityList(props) {
     )
 
     return (
-      <ul>{activitiesList}</ul>
+      <div className="activity-list">
+        {activitiesList}
+      </div>
     )
   }
 

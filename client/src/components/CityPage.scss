@@ -538,7 +538,7 @@
 .hvr-grow:hover,
 .hvr-grow:focus,
 .hvr-grow:active {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 
@@ -598,4 +598,21 @@
 .hvr-grow-link:focus,
 .hvr-grow-link:active {
   transform: scale(1.035);
+}
+
+.hvr-grow-button {
+  display: inline-block;
+  vertical-align: middle;
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+
+.hvr-grow-button:hover,
+.hvr-grow-button:focus,
+.hvr-grow-button:active {
+  transform: scale(1.06);
 }
