@@ -287,13 +287,13 @@ module.exports = knex => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'julien.atanassian@gmail.com',
+        user: 'theomalaper.cognez@gmail.com',
         pass: process.env.REACT_APP_MAIL_PWD
       }
     });
     const mailOptions = {
-      from: `julien.atanassian@gmail.com`,
-      to: 'jatanassian@hotmail.fr',
+      from: `theomalaper.cognez@gmail.com`,
+      to: 'theomalaper@icloud.com',
       subject: `Your trip`,
       html: req.body.message
     };
