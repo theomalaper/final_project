@@ -7,7 +7,7 @@ export default function TripForm(props) {
   const [type, setType] = useState("Backpacking");
   const [budget, setBudget] = useState(500);
   const [startingCity, setStartingCity] = useState("");
-  const [startDate, setStartDate] = useState("");
+  const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));
   const [zone, setZone] = useState("");
   const [error,setError] = useState("");
   const [isPlanning, setIsPlanning] = useState(false);
@@ -53,14 +53,14 @@ export default function TripForm(props) {
           <select value={type} onChange={event => setType(event.target.value)}>
             <option value="Backpacking">Backpacking</option>
             <option value="Casual">Casual</option>
-            <option value="Treating yourselves">Treating yourselves</option>
+            <option value="No Limits">No Limits</option>
           </select> 
         </div>
         <div className="form-select">
           <p>Budget</p>
           <select value={budget} onChange={event => setBudget(event.target.value)}>
           <option value={500}>0-500</option>
-            <option value={1000}>0-1000</option>
+            <option value={1000}>500-1000</option>
             <option value={2000}>1000-2000</option>
             <option value={3000}>2000-3000</option>
             <option value={4000}>3000-4000</option>

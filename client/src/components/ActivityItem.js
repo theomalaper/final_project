@@ -15,6 +15,7 @@ export default function ActivityItem(props) {
         <button className="activity-collapse-button" onClick={() => setOpen(!open)} aria-controls="city-activity-links" aria-expanded={open}>
           <h4>{name}</h4>
           <p>{description}</p>
+          <img className="drop-down-arrow" src="https://image.flaticon.com/icons/svg/130/130907.svg"/>
         </button>
         <Collapse in={open}>
           <div className="city-activity-links">
