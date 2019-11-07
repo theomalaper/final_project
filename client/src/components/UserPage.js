@@ -33,7 +33,7 @@ export default function CityPage({ dispatch, SET_PROFILE_DATA, profileInfo }) {
           <p>{profileInfo ? profileInfo.user[0].email : null}</p>
         </div>
         <div className="header-overlay"></div>
-        <img className='background-image' src="https://i.imgur.com/YjgkdT1.jpg" alt="User page background"/>
+        <img className='background-image' src="https://i.imgur.com/opC04dJ.jpg" alt="User page background"/>
       </header>
       <section className="user-page-subnav">
         <button onClick={() => transition(OVERVIEW)}><p className="hvr-grow">OVERVIEW</p></button>

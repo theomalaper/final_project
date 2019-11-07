@@ -299,7 +299,6 @@
   .left-side {
     background-color: white;
     width: 60vw;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -333,7 +332,7 @@
         font-family: 'Noto Sans', sans-serif;
         color: #0B3954;
         text-align: center;
-        padding: 1.5em;
+        padding: 1.75em;
       }
       .city-activity {
         border: 1px solid rgb(187, 187, 187);
@@ -351,8 +350,8 @@
           .pin-button {
             background-color: transparent;
             border: none;
-            height: 2.5em;
-            width: 2.5em;
+            height: 4em;
+            width: 4em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -374,23 +373,36 @@
           background-color: transparent;
         }
         .city-activity-description {
-          padding: 1em 1.5em;
+          padding-right: 1.5em;
+          padding-left: 1.5em;
+          padding-top: 1em;
+          padding-bottom: 0em;
           display: flex;
           flex-direction: column;
           h4 {
             font-size: 1em;
             color: #0B3954;
-            padding-bottom: 0.3em;
+            padding-bottom: 0.2em;
             text-align: start;
           }
           p {
             font-size: 0.8em;
-            margin: 0.2em 0;
+            margin: 0em 0;
             text-align: start;
+          }
+          .drop-down-arrow {
+            width: 0.7em;
+            height: 0.7em;
+            margin-right: 2.8em;
+            opacity: 1;
+            margin-bottom: 0.5em;
+            opacity: 0;
           }
           .link {
             margin-left: 0.3em;
             margin-right: 1em;
+            margin-bottom: 0.5em;
+            padding: 0.4em 0;
             font-size: 0.8em;
             color: darkblue;
             text-decoration: none;
@@ -404,6 +416,9 @@
       }
       .city-activity:hover {
         border: 1px solid darkgrey;
+        .drop-down-arrow {
+          opacity: 1;
+        }
       }
     }
   }
@@ -411,7 +426,7 @@
 
   .right-side {
     width: 40vw;
-    height: 117vh;
+    height: 118vh;
     background-color:rgb(247, 248, 255);
     padding: 3em 0;
     display: flex;
