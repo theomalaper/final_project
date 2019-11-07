@@ -37,7 +37,7 @@ export default function TripPage(props) {
         <p><strong><u>${city.name}</u></strong>, ${city.country}</p>
         <ListGroup variant="flush">
           <ListGroup.Item className="content">
-          <p>Activities:
+          <p>Activities:  
             ${city.activities ? city.activities.map(act => {
               return ` ${act.activity_name}`
             }) : `No activities selected.`}<br>
@@ -87,6 +87,16 @@ export default function TripPage(props) {
         console.error('here is the error: ', err);
       })
     };
+
+    const countriesVisited = () => {
+      let countriesVisited = []
+      citiesInfo.forEach(city => {
+        if (!countriesVisited.includes(city.country)) {
+          countriesVisited.push(city.country)
+        }
+      })
+      return countriesVisited.length
+    }
 
     return (
       <Fragment>
@@ -138,7 +148,7 @@ export default function TripPage(props) {
                 </div>
                 <div className="info-content">
                   <p className="info-title">COUNTRIES</p>
-                  <p>3 Visited</p>
+                  <p>{countriesVisited()} Visited</p>
                 </div>
               </div>
               <div className="info">

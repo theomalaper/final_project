@@ -1,6 +1,16 @@
 import React from "react"
 
 export default function Overview({ profileInfo }) {
+  const countriesVisited = () => {
+    let countriesVisited = []
+    profileInfo.cities.forEach(city => {
+      if (!countriesVisited.includes(city.country)) {
+        countriesVisited.push(city.country)
+      }
+    })
+    return countriesVisited.length
+  }
+
   return (
     <main className="overview-card">
       <h4 className="title">Overview</h4>
@@ -48,8 +58,8 @@ export default function Overview({ profileInfo }) {
           <div className="stat-content">
             <img className="hvr-float" src="https://image.flaticon.com/icons/svg/201/201623.svg"></img>
             <div>
-              <h5>DAYS TRAVELLED</h5>
-              <p>12</p>
+              <h5>COUNTRIES VISITED</h5>
+              <p>{profileInfo ? countriesVisited() : null }</p>
             </div>
           </div>
           <div className="stat-footer">
