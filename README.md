@@ -3,16 +3,31 @@ A travel planner allowing users to find random cities around their trip's starti
 
 ## Final product 
 Regular view of the homepage and the initial form.
-!["Homepade"]()
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.27.23%20AM.png?raw=true"]()
 
-Page of a city
-!["City Page"]()
+City page when adding it to your trip
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.29.48%20AM.png?raw=true"]()
 
-Overview of the trip that has been planned
-!["Trip Page"]()
+City page when adding activities and overlooking expenses
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.29.05%20AM.png?raw=true"]()
 
-Profile page showing all the trips, cities and activities you have experienced
-!["Profile Page"]()
+City page when finalizing trip
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.31.57%20AM.png?raw=true"]()
+
+Overview of the trip that has been planned with background map
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.32.13%20AM.png?raw=true"]()
+
+Overview of each cities' trip planning
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.32.26%20AM.png?raw=true"]()
+
+Overview of the overall trip summary
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.32.37%20AM.png?raw=true"]()
+
+Profile page showing all the trips,
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.33.06%20AM.png?raw=true"]()
+
+Profile page showing cities and activities you have experienced
+!["https://github.com/theomalaper/Nomad/blob/master/doc/img/Screen%20Shot%202019-11-08%20at%2011.33.15%20AM.png?raw=true"]()
 
 ## Getting started
 1. Install dependencies using the `npm install` command.
